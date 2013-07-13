@@ -291,5 +291,36 @@ class CreateSchool < ActiveRecord::Migration
       t.timestamps
     end
 
+    #--------------------------------------------------------------------------
+    # this will store quiz question results for the record and for
+    # easy form processing and score calculation
+    create_table :answers do |t|
+      
+      t.column :question_id,    :integer, :default => nil
+      t.column :user_quiz_id,   :intereg, :default => nil
+      
+      t.column :app_id,         :integer, :default => nil
+      t.column :user_id,        :integer, :default => nil
+      
+      t.column :code,           :string,  :default => nil
+      t.column :name,           :string,  :default => nil
+      t.column :title,          :string,  :default => nil
+      t.column :description,    :string,  :default => nil
+      
+      t.column :question_text,  :text # the actual tet of the question
+      t.column :answer_a,       :string,  :default => nil
+      t.column :answer_b,       :string,  :default => nil
+      t.column :answer_c,       :string,  :default => nil
+      t.column :answer_d,       :string,  :default => nil
+      t.column :answer_e,       :string,  :default => nil
+      t.column :answer_f,       :string,  :default => nil
+      t.column :answer,         :string,  :default => nil
+      t.column :passed,         :boolean, :false
+
+      t.column :creator_id,     :integer, :default => nil
+      t.column :editor_id,      :integer, :default => nil
+      t.timestamps
+    end
+
   end
 end

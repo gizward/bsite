@@ -15,6 +15,7 @@
       - unless obj.p_abstract.blank?
         .abstract= safe obj.p_abstract
       %h6= "Number of lectures: #{obj.lectures.size}"
+      %h6= "Price: #{RDisplay.cents(obj.price)}"
       .links
         = link_to "enroll", "/school/#{obj.id}/enroll"
         |

@@ -33,6 +33,10 @@ class SchoolController < ApplicationController
   def quiz
     @id       = params[:id]
     @object   = Quiz.first(:conditions=>{:published=>true,:active=>true,:id=>@id})
+    if @object
+      @lecture = @object.lecture
+      @course  = @lecture.course
+    end
     @page     = Page.first(:conditions=>{:published=>true,:active=>true,:app_segment_id=>AppSegment::SCHOOL,:code=>'enroll'})
   end
   
@@ -50,6 +54,11 @@ class SchoolController < ApplicationController
     @course = Course.first(:conditions=>{:published=>true,:active=>true,:id=>@id})
     if @course
       @object = Enrollment.new
+
+      @object.security_answer = ''
+      @object.security_question_id = rand(RCaptcha::QUESTIONS.size)
+      @security_question = RCaptcha::QUESTIONS[@object.security_question_id.to_i]
+
       if current_user
         @object.course_id  = @course.id
         @object.creator_id = current_user.id
@@ -67,6 +76,11 @@ class SchoolController < ApplicationController
     if @object.save
       redirect_to("/school/enroll_thankyou")
     else
+      if @object.security_answer_invalid
+        @object.security_answer = ''
+        @object.security_question_id = rand(RCaptcha::QUESTIONS.size)
+      end
+      @security_question = RCaptcha::QUESTIONS[@object.security_question_id.to_i]
       @course = Course.first(:conditions=>{:published=>true,:active=>true,:id=>params[:id]})
       @page   = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>'enroll'})
       render :action => :enroll

@@ -13,6 +13,7 @@
     %h4= @course.description
     = safe @course.p_abstract
     %h6= "Number of lectures: #{@course.lectures.size}"
+    %h6= "Price: #{RDisplay.cents(@course.price)}"
 
   #enrollment_form
   
@@ -60,6 +61,19 @@
               %td.data
                 %span.note= 'Note:'
                 = "We are not storing your full credit information."
+
+        %hr
+        = f.hidden_field :security_question_id
+        = "Oh, and one more thing -"
+        %span.note= "Are you human?"
+        = "Answer me this:"
+        %br
+        %span.bold= safe @security_question
+        = "&nbsp;&nbsp;&nbsp;".html_safe
+        - if @object.security_answer_invalid
+          .field_with_errors= f.text_field :security_answer, :class=>'tiny'
+        - else
+          = f.text_field :security_answer, :class=>'tiny'
 
     .form_actions.buttons
       .buttons_inner

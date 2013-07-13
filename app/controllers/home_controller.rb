@@ -29,6 +29,11 @@ class HomeController < ApplicationController
 
   def contact
     @object = Email.new
+
+    @object.security_answer = ''
+    @object.security_question_id = rand(RCaptcha::QUESTIONS.size)
+    @security_question = RCaptcha::QUESTIONS[@object.security_question_id.to_i]
+
     if current_user
       @object.user_id    = current_user.id
       @object.user_name  = current_user.name
@@ -42,6 +47,11 @@ class HomeController < ApplicationController
     if @object.save
       redirect_to("/home/contact_thankyou")
     else
+      if @object.security_answer_invalid
+        @object.security_answer = ''
+        @object.security_question_id = rand(RCaptcha::QUESTIONS.size)
+      end
+      @security_question = RCaptcha::QUESTIONS[@object.security_question_id.to_i]
       @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>'contact'})
       render :action => :contact
     end  

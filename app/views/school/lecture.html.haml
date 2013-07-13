@@ -1,5 +1,5 @@
 
-- if @course
+- if @object && @course 
 
   .course_details
     %h1= safe @course.title
@@ -11,6 +11,10 @@
     %h4= safe @object.description
     .content
       = safe @object.content
+      
+    - if @object.quiz
+      .links
+        = link_to "take the quiz &raquo;".html_safe, "/school/#{@object.quiz.id}/quiz"
       
   
 - else

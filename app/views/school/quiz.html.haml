@@ -1,0 +1,33 @@
+
+- if @object && @course && @lecture
+
+  .course_details
+    %h1= safe @course.title
+    %h2= safe @course.description
+    
+  %hr
+  .lecture
+    %h3= safe @lecture.title
+    %h4= safe @lecture.description
+    
+  .quiz_form
+    = form_for(@object,:url=>"/school/#{@object.id}/quiz_submit") do |f|
+      = render :partial=>'/shared/admin/form_errors'
+  
+      - @object.questions.each do |q|
+        .block.for_question
+          = "#{q.position}. #{safe q.p_content}"
+          - Question::ANSWER_PREFIX.each do |a|
+            - answer = q.send("p_answer_#{a}")
+            - unless answer.blank?
+              %div
+                = "<b>#{a}.</b>".html_safe
+                -#= f.check_box("q#{q.position}#{a}".to_sym)
+                = answer
+        
+
+      
+  
+- else
+  %h1.error= "Course Not Found..."
+  %p= "/school/#{@id}"
