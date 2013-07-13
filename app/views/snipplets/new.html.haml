@@ -1,0 +1,18 @@
+- log_object_view '/snipplets/new'
+
+.top_actions.buttons
+  = RDisplay.cancel_form_link("/snipplets")
+  = RDisplay.submit_form_link("new_snipplet")
+
+= view_title @object, :new
+
+= form_for(@object) do |f|
+
+  = render :partial=>'/shared/admin/form_errors'
+  = render :partial=>'/shared/admin/form_details',    :locals=>{:f=>f}
+  = render :partial=>'/shared/admin/form_html_block', :locals=>{:f=>f}
+          
+.form_actions.buttons
+  = RDisplay.cancel_form_link("/snipplets")
+  = RDisplay.submit_form_link("new_snipplet")
+    

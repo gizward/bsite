@@ -1,0 +1,14 @@
+- log_shared_partial '/shared/admin/show_meta'
+
+- item ||= @object
+
+.block
+  .title= "Meta Tags"
+  .content
+    %table
+      = RDisplay.data_row(item,:meta_title)
+      = RDisplay.data_row(item,:meta_dscr)
+      = RDisplay.data_row(item,:meta_author)
+      = RDisplay.data_row(item,:meta_keywords)
+      = RDisplay.data_row(item,:meta_robots)
+

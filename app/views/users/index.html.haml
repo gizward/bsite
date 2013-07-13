@@ -1,0 +1,13 @@
+- log_object_view '/users/index'
+
+= render :partial=>'/layouts/admin/filters'
+
+.top_actions.buttons
+  = link_to 'refresh', users_path
+  = link_to 'new', new_user_path, :class=>'new'
+  
+= view_title 'Users', :list
+
+= render :partial=>'list'
+
+= will_paginate @objects

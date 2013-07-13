@@ -1,0 +1,28 @@
+- segments ||= get_segments
+
+<script type='text/javascript'>
+
+- JsScript.ns_for(segments).ns_published.ns_active.ns_ordered.each do |s|
+  = "/*============================================================*//*SCRIPT:#{s.app_segment.code}.#{s.code}(#{s.position})*/"
+  = load_script s
+  = "/*============================================================*//*EOF.SCRIPT:#{s.app_segment.code}.#{s.code}(#{s.position})*/"
+
+- @std_snipplets.each_value do |snipplet|
+  - if snipplet && !snipplet.scripts.blank?
+    = "/*============================================================*//*SNIPPLET:#{snipplet.app_segment.code}.#{snipplet.code}(#{snipplet.position})*/"
+    = load_script snipplet
+    = "/*============================================================*//*SNIPPLET:#{snipplet.app_segment.code}.#{snipplet.code}(#{snipplet.position})*/"
+
+- if @object && !@object.class.name == 'JsScript'
+  = load_script @object
+
+= load_script @page
+
+- @additional_snipplets.each do |s|
+  = "/*============================================================*//*SNIPPLET:#{snipplet.app_segment.code}.#{snipplet.code}(#{snipplet.position})*/"
+  = load_script s
+  = "/*============================================================*//*SNIPPLET:#{snipplet.app_segment.code}.#{snipplet.code}(#{snipplet.position})*/"
+
+</script>
+
+- log_layout_loader "load_scripts <i>(#{@script_objects.size})</i>"

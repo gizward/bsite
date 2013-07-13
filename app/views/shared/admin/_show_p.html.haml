@@ -1,0 +1,23 @@
+- log_shared_partial '/shared/admin/show_p'
+
+- item ||= @object
+
+- if item.respond_to?(:p_options_str)
+  .block
+    .title= 'Details'
+    .content
+      %table
+        %tbody
+          = RDisplay.data_row(item,:p_options_str,:label=>'Options')
+
+- if item.respond_to?(:p_abstract)
+  = render :partial=>'/shared/admin/show_html_block', :locals=>{:item=>item,:field_name=>'p_abstract'}
+
+- if item.respond_to?(:p_content)
+  = render :partial=>'/shared/admin/show_html_block', :locals=>{:item=>item,:field_name=>'p_content', :tabs_postfix=>'1'}
+
+- if item.respond_to?(:p_styles)
+  = render :partial=>'/shared/admin/show_css_block',  :locals=>{:item=>item,:field_name=>'p_styles'}
+
+- if item.respond_to?(:p_scripts)
+  = render :partial=>'/shared/admin/show_js_block',   :locals=>{:item=>item,:field_name=>'p_scripts'}

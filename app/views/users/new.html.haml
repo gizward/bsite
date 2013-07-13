@@ -1,0 +1,19 @@
+- log_object_view '/users/new'
+
+.top_actions.buttons
+  = RDisplay.cancel_form_link("/users")
+  = RDisplay.submit_form_link("new_user")
+
+= view_title @object, :new
+
+= form_for(@object) do |f|
+
+  = render :partial=>'/shared/admin/form_errors'
+  = render :partial=>'form_details',  :locals=>{:f=>f}
+  = render :partial=>'form_password', :locals=>{:f=>f}
+  = render :partial=>'form_roles',    :locals=>{:f=>f}
+          
+.form_actions.buttons
+  = RDisplay.cancel_form_link("/users")
+  = RDisplay.submit_form_link("new_user")
+    

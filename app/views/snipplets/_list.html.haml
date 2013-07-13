@@ -1,0 +1,26 @@
+- log_object_partial '/snipplets/list'
+
+- items  ||= @objects
+- title  ||= 'Snipplets'
+- sorter ||= controller.action_name == 'index' 
+
+.block
+  .title= 'List'
+  .content
+    %table
+      %tr
+        %th.key.w60px= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th.w120px.acenter= RFilterHelper.sort_by_link('Segment','app_segment_id',@filter,sorter)
+        %th.w200px= RFilterHelper.sort_by_link('Name','name',@filter,sorter)
+        %th= RFilterHelper.sort_by_link('Title','title',@filter,sorter)
+        %th.w100.aright= 'Status'
+
+      - reset_cycle
+      - @objects.each do |item| 
+        %tr{:class=>"#{item.status_raw} #{cycle('odd','even')}"}
+          %td.key.w60px= RDisplay.id_link(item)
+          %td.w120px.acenter= RDisplay.with_style(item.app_segment)
+          %td.w200px= RDisplay.str(item.name)
+          %td= RDisplay.str(item.title)
+          %td.w100.aright= RDisplay.str(item.status_str)
+

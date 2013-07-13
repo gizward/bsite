@@ -1,0 +1,28 @@
+- log_object_partial '/questions/form_question'
+
+- if f
+
+  - item = f.object
+  
+  .block.for_text_entry
+    .title= 'Question Text'
+    .content
+      .text_entry= f.text_area(:content,:rows=>5,:class=>'code html')
+
+  .block
+    .title= 'Answers'
+    .content
+      %table
+        %tbody
+          %tr
+            %th.w20px= 'No.'
+            %th.w50px= 'Correct?'
+            %th= 'Answer Text'
+          - num = 0
+          - Question::ANSWER_PREFIX.each do |q|
+            - num = num + 1
+            %tr
+              %td.w20px= "#{num}."
+              %td.w50px= f.check_box("correct_#{q}".to_sym)
+              %td= f.text_field("answer_#{q}".to_sym)
+  %p= '<b>Note:</b> Blank answers are not displayed.'.html_safe

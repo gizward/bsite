@@ -1,0 +1,35 @@
+
+- if default_show(:userbar)
+
+  - obj  = @std_snipplets[:userbar]
+  - cont = 'none'
+
+  - if false && obj 
+    - cont = 'empty'
+    - if !obj.p_content.blank?
+      - cont = 'ok'
+      #userbar
+        #userbar_inner.inner
+          #userbar_inside.inside
+            = safe Parser.parse(obj.p_content)
+
+  - else
+    -#.error= "<b>userbar</b> snipplet not found".html_safe
+
+  #userbar
+    #userbar_inner.inner
+      #userbar_inside.inside
+
+        #user_actions
+          - if user_signed_in?
+            = link_to 'Log out', destroy_user_session_path, :method => :delete
+          - else
+            = link_to 'Log in', "/users/sign_in"
+
+        #user_info
+          - if user_signed_in?
+            - unless current_user.name.blank?
+              = current_user.name
+            = "(#{current_user.email})"
+
+  - log_layout_partial "load_userbar <i>(#{cont})</i>"

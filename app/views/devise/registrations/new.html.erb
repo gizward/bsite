@@ -1,0 +1,25 @@
+<%- log_object_view '/devise/registrations/new' %>
+
+<h1>New User Registration</h1>
+
+<div class='devise_form'>
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.label :name %><br />
+  <%= f.email_field :name %></div>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email %></div>
+
+  <div><%= f.label :password %><br />
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></div>
+
+  <div class='buttons'><%= f.submit "Sign up" %></div>
+<% end %>
+</div>
+
+<div class='devise_actions'><%= render "devise/shared/links" %></div>

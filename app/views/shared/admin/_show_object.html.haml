@@ -1,0 +1,9 @@
+- log_shared_partial '/shared/admin/show_object'
+
+- item ||= @object
+
+- if item
+
+  = view_title item, :show
+  
+  = render :partial=>'/shared/admin/show_object_tabs'

@@ -1,0 +1,146 @@
+
+- if show_devbar
+
+  - log_layout_partial '/layouts/admin/devbar'
+  
+  #devbar_actions.noshow
+    [
+    = link_to_function '+',"showElement('devbar');hideElement('devbar_actions');"
+    ]
+    
+  #devbar
+    #devbar_inner
+      #devbar_inside
+    
+        #devbar_title
+          #actions
+            [
+            = link_to_function 'x',"hideElement('devbar');showElement('devbar_actions');"
+            ]
+          = 'Developer'
+
+        - if @errors.size > 0
+          .block.errors
+            .title.active{:id=>'db_errors_h',:onclick=>"flipElement('db_errors');"}= "Errors"
+            .content{:id=>'db_errors'}
+              - @errors.each do |e|
+                %div= "* #{e}".html_safe
+      
+        - if @warnings.size > 0
+          .block.warnings
+            .title{:id=>'db_warnings_h',:onclick=>"flipElement('db_warnings');"}= "Warnings"
+            .content.noshow{:id=>'db_warnings'}
+              - @warnings.each do |w|
+                %div= "* #{w}".html_safe
+      
+      - if current_user
+        .block.user
+          .title{:id=>'db_user_info_h',:onclick=>"flipElement('db_user_info');"}= 'User Info'
+          .content.noshow{:id=>'db_user_info'}
+            %div= "<b>&rarr; #{current_user.class.name} #{current_user.id}</b>".html_safe
+            %div= "<b>N:</b> #{current_user.name}".html_safe
+            %div= "<b>E:</b> #{current_user.email}".html_safe
+            %div= "<b>R:</b> #{current_user.role_str}".html_safe
+            %hr
+            %div= link_to 'Log out', destroy_user_session_path, :method => :delete
+
+  
+      .block.system
+        .title{:id=>'db_sys_info_h',:onclick=>"flipElement('db_sys_info');"}= 'System Info'
+        .content.noshow{:id=>'db_sys_info'}
+          %div= "<b>Ruby:</b> #{RUBY_VERSION}".html_safe
+          %div= "<b>Rails:</b> #{Rails.version}".html_safe
+          %div= "Environment: <b>#{Rails.env}</b>".html_safe
+
+        = yield :developer_actions
+
+        - if @object
+          .block.developer
+            .title{:id=>'db_object_info_h',:onclick=>"flipElement('db_object_info');"}= 'Object Info'
+            .content.noshow{:id=>'db_object_info'}
+              %div= "&rarr; <b>#{@object.class.name} #{@object.id}</b>".html_safe
+              - if @object.respond_to?(:code)
+                %div= "<b>C:</b> #{RDisplay.str(@object.code)}".html_safe
+              - if @object.respond_to?(:name)
+                %div= "<b>N:</b> #{RDisplay.str(@object.name)}".html_safe
+              - if @object.respond_to?(:title)
+                %div= "<b>T:</b> #{RDisplay.str(@object.title)}".html_safe
+              - if @object.respond_to?(:size)
+                %div= "<b>S:</b> #{RDisplay.str(@object.size)}".html_safe
+              - if @object.respond_to?(:price)
+                %div= "<b>P:</b> #{RDisplay.cents(@object.price)}".html_safe
+
+        .block.developer
+          .title{:id=>'db_action_info_h',:onclick=>"flipElement('db_action_info');"}= 'Action Info'
+          .content.noshow{:id=>'db_action_info'}
+
+            %div= "#{@current_controller} / #{@current_action}"
+            %div= "<b>Devise:</b> #{RDisplay.yn(@devise_action)}".html_safe
+            %hr
+            %div= "Segment: <b>#{@segment}</b>".html_safe
+
+        .block.developer
+          .title{:id=>'db_std_snipplets_h',:onclick=>"flipElement('db_std_snipplets');"}= 'Standard Snipplets'
+          .content.noshow{:id=>'db_std_snipplets'}
+            - @std_snipplets.each_pair do |k,v|
+              - if v
+                %div= safe "<span class='key'>#{k} </span> <b>#{v.id}</b>"
+              - else
+                %div= safe "<span class='key'>#{k} </span> -"
+
+        .block.developer
+          .title{:id=>'db_load_obj_details_h',:onclick=>"flipElement('db_load_obj_details');"}= 'Loaded Objects'
+          .content.noshow{:id=>'db_load_obj_details'}
+            %h6.first= "(#{@style_objects.size}) Styles"
+            %div= safe @style_objects.join('<br/>')
+            %h6= "(#{@script_objects.size}) Scripts"
+            %div= safe @script_objects.join('<br/>')
+            %h6= "(#{@page_objects.size}) Pages"
+            %div= safe @page_objects.join('<br/>')
+            %h6= "(#{@snipplet_objects.size}) Snipplets"
+            %div= safe @snipplet_objects.join('<br/>')
+
+        .block.developer
+          .title{:id=>'db_load_obj_sequence_h',:onclick=>"flipElement('db_load_obj_sequence');"}= 'Objects Sequence'
+          .content.noshow{:id=>'db_load_obj_sequence'}
+            %div= safe @object_sequence.join('<br/>')
+
+        .block.developer
+          .title{:id=>'db_load_details_h',:onclick=>"flipElement('db_load_details');"}= 'Loaded Views'
+          .content.noshow{:id=>'db_load_details'}
+            %h6.first= "(#{@layout_views.size+@layout_partials.size+@layout_loaders.size}) From Layouts Folder"
+            - if @layout_views && @layout_views.size>0
+              %div= safe @layout_views.join('<br/>')
+            - if @layout_loaders && @layout_loaders.size>0
+              %div= safe @layout_loaders.join('<br/>')
+            - if @layout_partials && @layout_partials.size>0
+              %div= safe @layout_partials.join('<br/>')
+            %h6= "(#{@object_views.size+@object_partials.size}) From Object Folder"
+            - if @object_views && @object_views.size>0
+              %div= safe @object_views.join('<br/>')
+            - if @object_partials && @object_partials.size>0
+              %div= safe @object_partials.join('<br/>')
+            %h6= "(#{@shared_views.size+@shared_partials.size}) From Shared Folder"
+            - if @shared_views && @shared_views.size>0
+              %div= safe @shared_views.join('<br/>')
+            - if @shared_partials && @shared_partials.size>0
+              %div= safe @shared_partials.join('<br/>')
+
+
+        .block.developer
+          .title{:id=>'db_load_sequence_h',:onclick=>"flipElement('db_load_sequence');"}= 'Views Sequence'
+          .content.noshow{:id=>'db_load_sequence'}
+            %div= safe @view_sequence.join('<br/>')
+
+        - if @todos.size>0 || @todos_global.size>0
+          .block.todos
+            .title{:id=>'db_todos_h',:onclick=>"flipElement('db_todos');"}= "ToDos"
+            .content.noshow{:id=>'db_todos'}
+              - @todos.each do |td|
+                %div= "* #{td}"
+              - if @todos.size>0 && @todos_global.size>0
+                %hr
+              - @todos_global.each do |td|
+                %div= "* #{td}"
+
+        .ender= ''

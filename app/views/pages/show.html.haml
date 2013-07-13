@@ -1,0 +1,19 @@
+- log_object_view 'pages/show'
+
+= render :partial=>'/layouts/admin/filters'
+
+.top_actions.buttons
+  .buttons_inner
+    = link_to 'list', pages_path, :class=>'list'
+    = link_to 'new', new_page_path, :class=>'new'
+    = buttons_divider
+    - if @object.active
+      = link_to 'disable', "/pages/#{@object.id}/activate", :class=>'disable'
+    - else
+      = link_to 'activate', "/pages/#{@object.id}/activate", :class=>'activate'
+    = buttons_divider
+    = link_to 'publish', "/pages/#{@object.id}/publish", :class=>'publish'
+  
+
+= render :partial=>'/shared/admin/show_object'
+

@@ -1,0 +1,19 @@
+- log_object_view 'js_scripts/show'
+
+= render :partial=>'/layouts/admin/filters'
+
+.top_actions.buttons
+  .buttons_inner
+    = link_to 'list', js_scripts_path, :class=>'list'
+    = link_to 'new', new_js_script_path, :class=>'new'
+    = buttons_divider
+    = link_to 'delete', @object, :method=>:delete, :class=>'delete', :confirm=>'Are you sure you wish to PERMANENTLY DELETE this object?'
+    - if @object.active
+      = link_to 'disable', "/js_scripts/#{@object.id}/activate", :class=>'disable'
+    - else
+      = link_to 'activate', "/js_scripts/#{@object.id}/activate", :class=>'activate'
+    = link_to 'publish', "/js_scripts/#{@object.id}/publish", :class=>'publish'
+  
+
+= render :partial=>'/shared/admin/show_object'
+

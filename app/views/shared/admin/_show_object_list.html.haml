@@ -1,0 +1,44 @@
+- log_shared_partial '/shared/admin/show_object_list'
+
+- items ||= @objects
+- item = items.first
+
+- table = controller_name
+
+= render :partial=>'/shared/admin/filters'
+
+.top_actions.buttons
+  .buttons_inner
+    = link_to 'new', "/#{table}/new", :class=>'new'
+  
+= view_title table.titleize, :list
+
+%h3= 'List'
+
+- if items && items.size>0
+
+  %table
+    %tr
+      %th.key.w60px.acenter= 'ID'
+      %th.w90px.acenter= 'Segment'
+      %th.w100px.aleft= 'Name'
+      - if item.respond_to?(:position)
+        %th.w60px.aright= 'Pos'
+      %th.aleft= 'Comments'
+      %th.w100px.aright= ''
+
+    - reset_cycle
+    - items.each do |item| 
+      %tr{:class=>cycle('odd','even')}
+        %td.key.w60px.acenter= RDisplay.id_link(item)
+        %td.w90px.acenter= RDisplay.with_style(item.segment)
+        %td.w100px.aleft= link_to item.name, item, :class=>'low'
+        - if item.respond_to?(:position)
+          %td.w60px.aright= item.position
+        %td.low.aleft= RDisplay.str(item.description)
+        %td.w100px.aright= item.status_str
+
+  = will_paginate items
+
+- else
+  = no_items_found

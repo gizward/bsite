@@ -1,0 +1,20 @@
+- log_object_partial '/shared/admin/form_parent'
+
+- if f
+
+  - item = f.object
+  - table_name ||= item.class.name.tableize
+  - class_name ||= table_name.singularize
+  - required   ||= [:course]
+
+  .block
+    .title= 'Parent'
+    .content
+      %table
+        - if @object.respond_to?(:course)
+          = RDisplay.row('Course',f.collection_select(:course_id,Course.all,:id,:name,{},:class=>"#{required.include?(:course) ? 'required' : ''}")+field_info(required.include?(:course)))
+        - if @object.respond_to?(:lecture)
+          = RDisplay.row('Lecture',f.collection_select(:lecture_id,Lecture.all,:id,:name,{},:class=>"#{required.include?(:lecture) ? 'required' : ''}")+field_info(required.include?(:lecture)))
+        - if @object.respond_to?(:quiz)
+          = RDisplay.row('Quiz',f.collection_select(:quiz_id,Quiz.all,:id,:name,{},:class=>"#{required.include?(:quiz) ? 'required' : ''}")+field_info(required.include?(:quiz)))
+

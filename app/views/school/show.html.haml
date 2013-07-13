@@ -1,0 +1,25 @@
+
+- if @object
+
+  .course_details
+    %h1= safe @object.title
+    %h2= safe @object.description
+    .content.block
+      = safe @object.p_content
+      .links
+        = link_to "enroll", "/school/#{@object.id}/enroll"
+    
+  .course_lectures
+    %h3= "This course contains #{@lectures.size} lecture(s)."
+    %table.list
+      %tbody
+        - @lectures.each do |lecture|
+          %tr{:class=>cycle('odd','even')}
+            %td.title= safe lecture.title
+            %td.description= safe lecture.description
+            %td.actions= link_to "read more &raquo;".html_safe, "/school/#{lecture.id}/lecture"
+      
+  
+- else
+  %h1.error= "Course Not Found..."
+  %p= "/school/#{@id}"

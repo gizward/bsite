@@ -1,0 +1,20 @@
+- log_shared_partial '/shared/admin/show_versions'
+
+- item ||= @object
+
+- if item.class.versioned?
+
+  - versions = item.versions
+  - versions.sort{|x,y| y.number<=>x.number}.each do |version|
+    
+    .block.expandable
+      .title{:id=>"ver_#{version.id}_h",:onclick=>"flipElement('ver_#{version.id}');"}= "Version #{version.number} (#{version.created_at})"
+      .content.noshow{:id=>"ver_#{version.id}"}
+        %code= version.modifications
+
+  %br
+  = log_todo 'revert to version functionality'
+
+- else
+
+  = log_error 'object not versioned'

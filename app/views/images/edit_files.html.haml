@@ -1,0 +1,32 @@
+- log_object_view '/images/edit_files'
+
+.buttons.right
+  = RDisplay.cancel_form_link("/images/#{@image.id}?show[attached_to]=yes")
+  = RDisplay.submit_form_link("edit_image_#{@image.id}")
+
+%h3= 'Image'
+%h2= @image.name 
+
+.block
+  %h4= "Edit Attached Objects"
+
+.block
+
+  - form_for(@image,:url=>"/images/update_attached_to/#{@image.id}") do |f|
+    = f.error_messages
+    
+    .block
+      %h5= 'Products'
+      #product_images
+        - f.fields_for :product_images do |product_image_form|
+          = render :partial => 'product_image', :locals => {:form => product_image_form}
+      .buttons
+        = add_product_image_link f
+
+    .block= render :partial=>'/shared/input_editorial_comment', :locals=>{ :f=>f }
+    = render :partial=>'/shared/input_reset_flags',             :locals=>{ :f=>f }
+    = render :partial=>'/shared/hidden_fields_for_input',       :locals=>{ :f=>f }
+
+.buttons.bottom
+  = RDisplay.cancel_form_link("/images/#{@image.id}?show[attached_to]=yes")
+  = RDisplay.submit_form_link("edit_image_#{@image.id}")

@@ -1,0 +1,189 @@
+- log_layout_partial '/layouts/admin/navigation'
+
+#navigation
+  #navigation_inner
+    #navigation_inside
+
+      #navigation_title= 'Navigation'
+
+      - menu_00_class = 'noshow'
+      - menu_01_class = 'noshow'
+      - menu_02_class = 'noshow'
+      - menu_03_class = 'noshow'
+      - menu_04_class = 'noshow'
+      - menu_05_class = 'noshow'
+      - menu_06_class = 'noshow'
+      - menu_07_class = 'noshow'
+      - menu_08_class = 'noshow'
+
+      - menu_00_class_h = ''
+      - menu_01_class_h = ''
+      - menu_02_class_h = ''
+      - menu_03_class_h = ''
+      - menu_04_class_h = ''
+      - menu_05_class_h = ''
+      - menu_06_class_h = ''
+      - menu_07_class_h = ''
+      - menu_08_class_h = ''
+
+      - if %(pages snipplets css_styles js_scripts).include? controller.controller_name 
+        -#--- home
+        - menu_00_class   = 'show'
+        - menu_00_class_h = 'here'
+      - elsif %(blogs tags).include? controller.controller_name 
+        -#--- blog
+        - menu_01_class   = 'show'
+        - menu_01_class_h = 'here'
+      - elsif %(forums threads posts).include? controller.controller_name 
+        -#--- forum
+        - menu_02_class   = 'show'
+        - menu_02_class_h = 'here'
+      - elsif %(products categories).include? controller.controller_name 
+        -#--- store
+        - menu_03_class   = 'show'
+        - menu_03_class_h = 'here'
+      - elsif %(courses lectures quizzes questions enrollments).include? controller.controller_name 
+        -#--- school
+        - menu_04_class   = 'show'
+        - menu_04_class_h = 'here'
+      - elsif %(images documents).include? controller.controller_name 
+        -#--- resources
+        - menu_05_class   = 'show'
+        - menu_05_class_h = 'here'
+      - elsif %(emails comments).include? controller.controller_name 
+        -#--- feedback
+        - menu_06_class   = 'show'
+        - menu_06_class_h = 'here'
+      - elsif %(users app_settings).include? controller.controller_name 
+        -#--- admin
+        - menu_07_class   = 'show'
+        - menu_07_class_h = 'here'
+      - elsif %(app_events app_errors tools).include? controller.controller_name 
+        -#--- developer
+        - menu_08_class   = 'show'
+        - menu_08_class_h = 'here'
+
+      .block.web
+        .title{:id=>'menu_00_h',:class=>menu_00_class_h,:onclick=>"changeMenu('menu_00');"}= 'Web'
+        .content{:id=>'menu_00',:class=>menu_00_class}
+          %ul
+            %li
+              = link_to "Pages", '/pages', :class=>menu_here('pages')
+              = obj_count(:pages)
+            %li
+              = link_to "Snipplets", '/snipplets', :class=>menu_here('snipplets')
+              = obj_count(:snipplets)
+          %ul
+            %li
+              = link_to "Styles", '/css_styles', :class=>menu_here('css_styles')
+              = obj_count(:css_styles)
+            %li
+              = link_to "Scripts",   '/js_scripts',  :class=>menu_here('js_scripts')
+              = obj_count(:js_scripts)
+
+      .block.blog
+        .title{:id=>'menu_01_h',:class=>menu_01_class_h,:onclick=>"changeMenu('menu_01');"}= 'Blog'
+        .content{:id=>'menu_01',:class=>menu_01_class}
+          %ul
+            %li
+              = link_to 'Blogs', blogs_path, :class=>menu_here('blogs')
+              = obj_count(:blogs)
+            %li
+              = link_to 'Tags', tags_path, :class=>menu_here('tags')
+              = obj_count(:tags)
+
+      .block.forum
+        .title{:id=>'menu_02_h',:class=>menu_02_class_h,:onclick=>"changeMenu('menu_02');"}= 'Forum'
+        .content{:id=>'menu_02',:class=>menu_02_class}
+          %ul
+            %li
+              = link_to 'Forums', pages_path, :class=>menu_here('forums')
+              = obj_count(:pages)
+            %li
+              = link_to 'Threads', pages_path, :class=>menu_here('threads')
+              = obj_count(:pages)
+            %li
+              = link_to 'Posts', pages_path, :class=>menu_here('posts')
+              = obj_count(:pages)
+
+      .block.store
+        .title{:id=>'menu_03_h',:class=>menu_03_class_h,:onclick=>"changeMenu('menu_03');"}= 'Store'
+        .content{:id=>'menu_03',:class=>menu_03_class}
+          %ul
+            %li
+              = link_to 'Products', products_path, :class=>menu_here('products')
+              = obj_count(:products)
+            %li
+              = link_to 'Categories', categories_path, :class=>menu_here('categories')
+              = obj_count(:categories)
+
+      .block.school
+        .title{:id=>'menu_04_h',:class=>menu_04_class_h,:onclick=>"changeMenu('menu_04');"}= 'School'
+        .content{:id=>'menu_04',:class=>menu_04_class}
+          %ul
+            %li
+              = link_to 'Courses', courses_path, :class=>menu_here('courses')
+              = obj_count(:courses)
+            %li
+              = link_to 'Lectures', lectures_path, :class=>menu_here('lectures')
+              = obj_count(:lectures)
+            %li
+              = link_to 'Quizzes', quizzes_path, :class=>menu_here('quizzes')
+              = obj_count(:quizzes)
+            %li
+              = link_to 'Questions', questions_path, :class=>menu_here('questions')
+              = obj_count(:questions)
+          %ul
+            %li
+              = link_to 'Enrollments', enrollments_path, :class=>menu_here('enrollments')
+              = obj_count(:enrollments)
+
+      .block.feedback
+        .title{:id=>'menu_05_h',:class=>menu_05_class_h,:onclick=>"changeMenu('menu_05');"}= 'Feedback'
+        .content{:id=>'menu_05',:class=>menu_05_class}
+          %ul
+            %li
+              = link_to 'Emails', emails_path, :class=>menu_here('emails')
+              = obj_count(:emails)
+            %li
+              = link_to 'Comments', comments_path, :class=>menu_here('comments')
+              -#= obj_count(:comments)
+
+      .block.resources
+        .title{:id=>'menu_06_h',:class=>menu_06_class_h,:onclick=>"changeMenu('menu_06');"}= 'Resources'
+        .content{:id=>'menu_06',:class=>menu_06_class}
+          %ul
+            %li
+              = link_to 'Videos', videos_path, :class=>menu_here('videos')
+              = obj_count(:videos)
+            %li
+              = link_to 'Images', images_path, :class=>menu_here('images')
+              = obj_count(:images)
+            %li
+              = link_to 'Documents', documents_path, :class=>menu_here('documents')
+              = obj_count(:documents)
+
+      .spacer= ''
+
+      - if is_admin?
+        .block.admin
+          .title{:id=>'menu_07_h',:class=>menu_07_class_h,:onclick=>"changeMenu('menu_07');"}= 'Admin'
+          .content{:id=>'menu_07',:class=>menu_07_class}
+            %ul
+              %li
+                = link_to 'Users', users_path, :class=>menu_here('users')
+                = obj_count(:users)
+              %li= link_to 'Settings', app_settings_path, :class=>menu_here('app_settings')
+      
+      - if is_developer?
+        .block.developer
+          .title{:id=>'menu_08_h',:class=>menu_08_class_h,:onclick=>"changeMenu('menu_08');"}= 'Developer'
+          .content{:id=>'menu_08',:class=>menu_08_class}
+            %ul
+              %li= link_to 'Events', app_events_path, :class=>menu_here('app_events')
+              %li= link_to 'Errors', app_errors_path, :class=>menu_here('app_errors')
+            %ul.small
+              %li= link_to 'Tools', tools_path, :class=>menu_here('tools')
+
+      .ender= ''
+

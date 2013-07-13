@@ -1,0 +1,23 @@
+- log_object_view '/devise/sessions/new'
+
+%h1= 'Existing User Log-in'
+
+.devise_form
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+
+    .block1
+      .label= f.label :email
+      .input= f.email_field :email
+
+    .block1
+      .label= f.label :password
+      .input= f.password_field :password
+
+    - if devise_mapping.rememberable?
+      .block1.checkbox
+        .input= f.check_box :remember_me
+        .label= f.label :remember_me
+
+    .buttons= f.submit "Log in"
+
+.devise_actions= render "devise/shared/links"

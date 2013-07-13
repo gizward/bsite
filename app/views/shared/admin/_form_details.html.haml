@@ -1,0 +1,23 @@
+- log_object_partial '/shared/admin/form_details'
+
+- if f
+
+  - item = f.object
+  - table_name ||= item.class.name.tableize
+  - class_name ||= table_name.singularize
+  - required   ||= [:code]
+  - ck_edit      = true if ck_edit == nil
+
+  .block
+    .title= 'Details'
+    .content
+      %table
+        = RDisplay.row('Code',f.text_field(:code,:class=>"tiny #{required.include?(:code) ? 'required' : ''}")+field_info(required.include?(:code),'must be unique within segment'))
+        = RDisplay.row('Name',f.text_field(:name, :class=>"long #{required.include?(:name) ? 'required' : ''}")+field_info(required.include?(:name),'must be unique'))
+        = RDisplay.row('Title',f.text_field(:title, :class=>"long #{required.include?(:title) ? 'required' : ''}")+field_info(required.include?(:title),'must be unique'))
+        = RDisplay.row('Description',f.text_field(:description,:class=>"long #{required.include?(:description) ? 'required' : ''}")+field_info(required.include?(:desscription)))
+        - if item.respond_to?(:position)
+          = RDisplay.row('Position',f.text_field(:position,:class=>"tiny #{required.include?(:position) ? 'required' : ''}")+field_info(required.include?(:position)))
+        - if item.respond_to?(:app_segment)
+          = RDisplay.row('Segment',f.collection_select(:app_segment_id,AppSegment.all,:id,:name,{},:class=>"#{required.include?(:segment) ? 'required' : ''}")+field_info(required.include?(:segment)))
+

@@ -1,0 +1,36 @@
+- log_layout_partial '/layouts/modules/userbar'
+
+- if user_signed_in?
+
+
+  #user_info_hidden.noshow
+    %strong
+      = link_to current_user.name, "/user/#{current_user.id}"
+
+  #user_actions_hidden.noshow
+    = link_to('Log out', destroy_user_session_path, :method => :delete)
+
+  #user_menu_hidden.noshow
+    - if current_user.role_id >= User::ADMIN
+      = link_to 'Home', '/home'
+      |
+      = link_to 'Blog', '/blog'
+      |
+      = link_to 'Forum', '/forum'
+      |
+      = link_to 'Store', '/store'
+      |
+      = link_to 'School', '/school'
+      |
+      = link_to 'User', '/user'
+      |
+      = link_to 'Admin', '/pages'
+
+- else
+
+  #user_info_hidden.noshow= ''
+  #user_actions_hidden.noshow= link_to 'Log in', "/users/sign_in"
+  #user_menu_hidden.noshow= ''
+
+= javascript_tag do
+  replaceStuffForUserbar();

@@ -1,0 +1,10 @@
+- log_object_partial '/users/show_special'
+
+- item ||= @object
+
+.block  
+  .title= "Special Flags"
+  .content
+    %table
+      = RDisplay.row('Editable?',RDisplay.yn_with_style_y(item.editable))
+      = RDisplay.row('Deletable?',RDisplay.yn_with_style_y(item.deletable))

@@ -1,0 +1,28 @@
+- log_object_partial '/quizzes/list'
+
+- items  ||= @objects
+- title  ||= 'Lectures'
+- sorter ||= controller.action_name == 'index' 
+
+.block
+  .title= safe title
+  .content
+    %table
+      %tr
+        %th.key.w60px.acenter= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th.w100px.aleft= 'Course'
+        %th.w100px.aleft= 'Lecture'
+        %th.w100px.aleft= 'Quiz'
+        %th.aleft= RFilterHelper.sort_by_link('Question Text','content',@filter,sorter)
+        %th.w100px.aright.low= 'Status'
+
+      - reset_cycle
+      - items.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px.acenter= RDisplay.id_link(item)
+          %td.w100px= RDisplay.link_to_obj(item.quiz.lecture.course,:id_str,:class=>'silent')
+          %td.w100px= RDisplay.link_to_obj(item.quiz.lecture,:id_str,:class=>'silent')
+          %td.w100px= RDisplay.link_to_obj(item.quiz,:id_str,:class=>'silent')
+          %td= RDisplay.str(item.content)
+          %td.w100px.aright= RDisplay.str(item.status_str)
+

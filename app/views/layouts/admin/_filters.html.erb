@@ -1,0 +1,61 @@
+<%- log_layout_partial '/layouts/admin/filters' %>
+
+<%- if @filter %>
+  <%= content_for :filters do %>
+
+    <% block_id = 'flters_table' %>
+    <% block_class = params[:filter] ? 'show' : 'noshow' %>
+    <% top_class   = params[:filter] ? 'open' : 'closed' %>
+
+    <div class="block">
+      <div class='title' id='<%= "#{block_id}_h" %>' onclick="flipElement('<%= block_id %>')">Search Filters</div>
+      <div  id="<%= block_id %>" class="content <%= block_class %>">
+
+        <%= form_for(:filter,:url=>{:action=>'index'},:html=>{:id=>'filters',:method=>'get'}) do |f| %>
+
+          <table cellspacing=0>
+            <tbody>
+
+              <tr>
+                <td class='first'>
+
+                  <%= @filter.search_field %>
+
+                  <% if @filter.boolean_field_registered?(:active) %>
+                    <%= @filter.boolean_dropdown_field(:label=>'-Active',:name=>'active') %>
+                  <% end %>
+
+                  <% if @filter.boolean_field_registered?(:adjusted) %>
+                    <%= @filter.boolean_dropdown_field(:label=>'-Adjusted',:name=>'adjusted') %>
+                  <% end %>
+
+                  <% if @filter.boolean_field_registered?(:published) %>
+                    <%= @filter.boolean_dropdown_field(:label=>'-Published',:name=>'published') %>
+                  <% end %>
+
+                </td>
+                <td class="last right"><%= @filter.paginate_fields %><%= @filter.sort_by_fields %></td>
+              </tr>
+
+              <tr>
+                <td class="first">
+                  <% if @filter.dropdown_registered?(:app_segment_id) %>
+                    <%= @filter.dropdown_field(:label=>'Segment',:name=>'app_segment_id',:collection=>AppSegment.all) %>
+                  <% end %>
+                  <%= yield %>
+                </td>
+                <td class="last right controls"><%= @filter.default_links %></td>
+              </tr>
+
+            </tbody>
+          </table>
+
+        <% end %>
+
+      </div>
+    </div>
+
+  <%- end %>
+<%- else %>
+  No Filter Found!
+<%- end %>

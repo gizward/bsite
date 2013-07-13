@@ -1,0 +1,21 @@
+- log_object_view '/courses/new'
+
+.top_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/courses")
+    = RDisplay.submit_form_link("new_course")
+
+= view_title @object, :new
+
+= form_for(@object) do |f|
+
+  = render :partial=>'/shared/admin/form_errors'
+  = render :partial=>'/shared/admin/form_details',    :locals=>{:f=>f}
+  = render :partial=>'/shared/admin/form_html_block', :locals=>{:f=>f,:field_name=>:abstract,:rows=>10}
+  = render :partial=>'/shared/admin/form_html_block', :locals=>{:f=>f}
+          
+.form_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/courses")
+    = RDisplay.submit_form_link("new_course")
+    

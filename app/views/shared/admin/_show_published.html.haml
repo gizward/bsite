@@ -1,0 +1,37 @@
+- log_shared_partial '/shared/admin/show_pupblished'
+
+- item ||= @object
+
+- if item
+
+  - if item.respond_to?(:p_options_str)
+    .block
+      .title= 'Details'
+      .content
+        %table
+          %tbody
+            = RDisplay.data_row(item,:p_options_str,:label=>'Options')
+
+  - if item.respond_to?(:p_abstract)
+    .block.expandable
+      .title{:id=>"p_abstract_h",:onclick=>"flipElement('p_abstract');"}= "Abstract #{item.p_abstract.blank? ? '(empty)' : ''}"
+      .content.noshow{:id=>"p_abstract"}
+        %pre= item.p_abstract
+  
+  - if item.respond_to?(:p_content)
+    .block.expandable
+      .title{:id=>"p_content_h",:onclick=>"flipElement('p_content');"}= "Content #{item.p_content.blank? ? '(empty)' : ''}"
+      .content.noshow{:id=>"p_content"}
+        %pre= item.p_content
+
+  - if item.respond_to?(:p_styles)
+    .block.expandable
+      .title{:id=>"p_styles_h",:onclick=>"flipElement('p_styles');"}= "Styles #{item.p_styles.blank? ? '(empty)' : ''}"
+      .content.noshow{:id=>"p_styles"}
+        %pre= item.p_styles
+
+  - if item.respond_to?(:p_scripts)
+    .block.expandable
+      .title{:id=>"p_scripts_h",:onclick=>"flipElement('p_scripts');"}= "Scripts #{item.p_scripts.blank? ? '(empty)' : ''}"
+      .content.noshow{:id=>"p_scripts"}
+        %pre= item.p_scripts

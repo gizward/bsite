@@ -1,0 +1,53 @@
+
+%h1= 'Contact Us'
+%hr
+
+
+#contact_info
+
+  %h2= 'Contact Information'
+
+  - if @page
+    = safe Parser.parse(@page.p_content)
+
+  - else
+    %h5.error= 'Need static contact information text.'
+
+#contact_form
+
+  %h2= 'Contact Form'
+  
+  = form_for(@object,:url=>"/home/contact_submit") do |f|
+  
+    = render :partial=>'/shared/admin/form_errors'
+  
+    .block
+      %h4= 'Personal Information:'
+      %table
+        %tbody
+          = RDisplay.row('Your Name:',f.text_field(:user_name))
+          = RDisplay.row('Your Email:',f.text_field(:user_email))
+          %tr
+            %td.label= ''
+            %td.data
+              %span.note= 'Note:'
+              = "It is our strict policy to keep your information private."
+
+      %h4= "What's It All About:"
+      .free_form_field
+        %label= 'Subject:'
+        = f.text_field(:subject)
+      .free_form_field
+        %label= 'Message:'
+        = f.text_area(:content,:rows=>10)
+        
+
+  .form_actions.buttons
+    .buttons_inner
+      = RDisplay.cancel_form_link("/home/")
+      | 
+      = RDisplay.submit_form_link("new_email",:label=>'Submit')
+  
+  
+  
+

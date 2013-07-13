@@ -1,0 +1,24 @@
+DEFAULTS: &DEFAULTS
+  adapter: mysql2
+  host: localhost
+  username: root
+  password:
+  port: 3306
+
+#==================================================================================
+
+development:
+  database: bsite_dev
+  <<: *DEFAULTS
+
+test:
+  database: bsite_test
+  <<: *DEFAULTS
+
+production:
+  database: bsite
+  username: bsite
+  password: hobbit
+  <<: *DEFAULTS
+
+#==================================================================================

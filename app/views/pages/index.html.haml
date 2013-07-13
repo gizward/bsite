@@ -1,0 +1,14 @@
+- log_object_view 'pages/index'
+
+= render :partial=>'/layouts/admin/filters'
+
+.top_actions.buttons
+  .buttons_inner
+    = link_to 'refresh', pages_path
+    = link_to 'new', new_page_path, :class=>'new large'
+  
+= view_title 'Pages', :list
+
+= render :partial=>'list'
+
+= will_paginate @objects

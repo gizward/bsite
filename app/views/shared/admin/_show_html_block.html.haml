@@ -1,0 +1,53 @@
+- log_shared_partial '/shared/admin/show_html_block'
+
+- item        ||= @object
+- no_actions  ||= false
+
+- if item
+
+  - table_name ||= item.class.name.tableize
+  - class_name ||= table_name.singularize
+  - field_name ||= 'content'
+  - title      ||= field_name.titleize
+  - tabs_postfix ||=''
+
+  - data = ''
+  - data = item.try(field_name.to_sym)
+
+  .block.for_text
+
+    .title
+
+      = safe title
+      
+      - if !data.blank?
+        .tabs2
+          = link_to_function "Text", "changeTab#{tabs_postfix}('tab#{tabs_postfix}_01')", :id=>"tab#{tabs_postfix}_01_a", :class=>"here" 
+          = link_to_function "Code", "changeTab#{tabs_postfix}('tab#{tabs_postfix}_02')", :id=>"tab#{tabs_postfix}_02_a"
+          = link_to_function "Raw",  "changeTab#{tabs_postfix}('tab#{tabs_postfix}_03')", :id=>"tab#{tabs_postfix}_03_a"
+
+    .content
+
+      %div{:id=>"tab#{tabs_postfix}_01"}
+        - if data.blank?
+          = empty('text')
+        - else
+          .text.for_html= RDisplay.str(item.try(field_name.to_sym))
+
+      %div.noshow{:id=>"tab#{tabs_postfix}_02"}
+        - if data.blank?
+          = empty('code')
+        - else
+          .text.for_pre
+            %pre
+              = data
+
+      %div.noshow{:id=>"tab#{tabs_postfix}_03"}
+        - if data.blank?
+          = empty('raw')
+        - else
+          .text.for_code
+            %code
+              = data
+
+      -#.clear

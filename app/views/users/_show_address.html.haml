@@ -1,0 +1,16 @@
+- log_object_partial '/users/show_address'
+
+- item  ||= @object
+- title ||= 'Address'
+
+.block
+  .title= safe title
+  .content
+    %table
+      = RDisplay.data_row(item,:line1)
+      = RDisplay.data_row(item,:line2)
+      = RDisplay.data_row(item,:city)
+      = RDisplay.data_row(item,:state)
+      = RDisplay.data_row(item,:zip)
+      = RDisplay.data_row(item,:country)
+

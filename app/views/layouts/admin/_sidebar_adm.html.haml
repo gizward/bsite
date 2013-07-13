@@ -1,0 +1,60 @@
+
+- if current_user && current_user.is_admin? && show_admbar
+
+  - log_layout_partial '/layouts/admin/admbar'
+  
+  #admbar_actions.noshow
+    [
+    = link_to_function '+',"showElement('admbar');hideElement('admbar_actions');"
+    ]
+    
+  #admbar
+    #admbar_inner
+      #admbar_inside
+
+        #admbar_title
+          #actions
+            [
+            = link_to_function 'x',"hideElement('admbar');showElement('admbar_actions');"
+            ]
+          = 'Admin'
+
+        - if current_user
+          .block.user
+            .title{:id=>'ab_user_info_h',:onclick=>"flipElement('ab_user_info');"}= 'User Info'
+            .content.noshow{:id=>'ab_user_info'}
+              %div= "<b>N:</b> #{current_user.name}".html_safe
+              %div= "<b>E:</b> #{current_user.email}".html_safe
+              %div= "<b>R:</b> #{current_user.role_str}".html_safe
+              %hr
+              %div= link_to 'Log out', destroy_user_session_path, :method => :delete
+
+
+          .block.user
+            .title{:id=>'ab_segments_h',:onclick=>"flipElement('ab_segments');"}= 'Segments'
+            .content.noshow{:id=>'ab_segments'}
+              %div
+                = '&raquo;'.html_safe
+                = link_to 'Home', '/home'
+              %div
+                = '&raquo;'.html_safe
+                = link_to 'Blog', '/blog'
+              %div
+                = '&raquo;'.html_safe
+                = link_to 'Forum', '/forum'
+              %div
+                = '&raquo;'.html_safe
+                = link_to 'Store', '/store'
+              %div
+                = '&raquo;'.html_safe
+                = link_to 'School', '/school'
+              %hr
+              %div
+                = '&raquo;'.html_safe
+                = link_to 'User CP', '/user'
+              %hr
+              %div
+                = '&raquo;'.html_safe
+                = link_to 'Admin', '/pages'
+            
+          .ender= ''

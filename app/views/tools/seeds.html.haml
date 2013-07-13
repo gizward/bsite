@@ -1,0 +1,303 @@
+- log_object_view '/tools/seeds'
+
+= "puts ' -- pages'"
+%br
+- Page.all.each do |o|
+
+  = "abstract = <<EOS"
+  %pre= o.abstract
+  = "EOS<br/>".html_safe
+
+  = "content = <<EOS"
+  %pre= o.content
+  = "EOS<br/>".html_safe
+
+  = "styles = <<EOS"
+  %pre= o.styles
+  = "EOS<br/>".html_safe
+
+  = "scripts = <<EOS"
+  %pre= o.scripts
+  = "EOS<br/>".html_safe
+
+  = "Page.create(<br/>".html_safe
+  = "&nbsp;&nbsp;:app_id => #{o.app_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:user_id => #{o.user_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:code => '#{o.code}',<br/>".html_safe
+  = "&nbsp;&nbsp;:name => '#{o.name}',<br/>".html_safe
+  = "&nbsp;&nbsp;:title => '#{o.title}',<br/>".html_safe
+  = "&nbsp;&nbsp;:description => '#{o.description}',<br/>".html_safe
+  = "&nbsp;&nbsp;:abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:content => content,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_content => content,<br/>".html_safe
+  = "&nbsp;&nbsp;:scripts => scripts,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_scripts => scripts,<br/>".html_safe
+  = "&nbsp;&nbsp;:styles => styles,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_styles => styles,<br/>".html_safe
+  = "&nbsp;&nbsp;:app_segment_id => #{o.app_segment_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:position => #{o.position},<br/>".html_safe
+  = "&nbsp;&nbsp;:published => #{o.published},<br/>".html_safe
+  = "&nbsp;&nbsp;:active => #{o.active}<br/>".html_safe
+  = ")<br/>".html_safe
+
+= "puts ' -- snipplets'"
+%br
+- Snipplet.all.each do |o|
+
+  = "content = <<EOS"
+  %pre= o.content
+  = "EOS<br/>".html_safe
+
+  = "styles = <<EOS"
+  %pre= o.styles
+  = "EOS<br/>".html_safe
+
+  = "scripts = <<EOS"
+  %pre= o.scripts
+  = "EOS<br/>".html_safe
+
+  = "Snipplet.create(<br/>".html_safe
+  = "&nbsp;&nbsp;:app_id => #{o.app_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:user_id => #{o.user_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:code => '#{o.code}',<br/>".html_safe
+  = "&nbsp;&nbsp;:name => '#{o.name}',<br/>".html_safe
+  = "&nbsp;&nbsp;:title => '#{o.title}',<br/>".html_safe
+  = "&nbsp;&nbsp;:description => '#{o.description}',<br/>".html_safe
+  = "&nbsp;&nbsp;:content => content,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_content => content,<br/>".html_safe
+  = "&nbsp;&nbsp;:scripts => scripts,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_scripts => scripts,<br/>".html_safe
+  = "&nbsp;&nbsp;:styles => styles,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_styles => styles,<br/>".html_safe
+  = "&nbsp;&nbsp;:app_segment_id => #{o.app_segment_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:position => #{o.position},<br/>".html_safe
+  = "&nbsp;&nbsp;:published => #{o.published},<br/>".html_safe
+  = "&nbsp;&nbsp;:active => #{o.active}<br/>".html_safe
+  = ")<br/>".html_safe
+
+= "puts ' -- css_styles'"
+%br
+- CssStyle.all.each do |o|
+
+  = "styles = <<EOS"
+  %pre= o.styles
+  = "EOS<br/>".html_safe
+
+  = "CssStyle.create(<br/>".html_safe
+  = "&nbsp;&nbsp;:app_id=>#{o.app_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:user_id=>#{o.user_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:code => '#{o.code}',<br/>".html_safe
+  = "&nbsp;&nbsp;:name => '#{o.name}',<br/>".html_safe
+  = "&nbsp;&nbsp;:title => '#{o.title}',<br/>".html_safe
+  = "&nbsp;&nbsp;:description => '#{o.description}',<br/>".html_safe
+  = "&nbsp;&nbsp;:styles=>styles,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_styles=>styles,<br/>".html_safe
+  = "&nbsp;&nbsp;:app_segment_id=>#{o.app_segment_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:position=>#{o.position},<br/>".html_safe
+  = "&nbsp;&nbsp;:published=>#{o.published},<br/>".html_safe
+  = "&nbsp;&nbsp;:active=>#{o.active}<br/>".html_safe
+  = ")<br/>".html_safe
+
+= "puts ' -- js_scripts'"
+%br
+- JsScript.all.each do |o|
+
+  = "scripts = <<EOS"
+  %pre= o.scripts
+  = "EOS<br/>".html_safe
+
+  = "JsScript.create(<br/>".html_safe
+  = "&nbsp;&nbsp;:app_id => #{o.app_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:user_id => #{o.user_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:code => '#{o.code}',<br/>".html_safe
+  = "&nbsp;&nbsp;:name => '#{o.name}',<br/>".html_safe
+  = "&nbsp;&nbsp;:title => '#{o.title}',<br/>".html_safe
+  = "&nbsp;&nbsp;:description => '#{o.description}',<br/>".html_safe
+  = "&nbsp;&nbsp;:scripts => scripts,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_scripts => scripts,<br/>".html_safe
+  = "&nbsp;&nbsp;:app_segment_id => #{o.app_segment_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:position => #{o.position},<br/>".html_safe
+  = "&nbsp;&nbsp;:published => #{o.published},<br/>".html_safe
+  = "&nbsp;&nbsp;:active => #{o.active}<br/>".html_safe
+  = ")<br/>".html_safe
+
+= "puts ' -- courses'"
+%br
+- Course.all.each do |o|
+
+  = "abstract = <<EOS"
+  %pre= o.abstract
+  = "EOS<br/>".html_safe
+
+  = "content = <<EOS"
+  %pre= o.content
+  = "EOS<br/>".html_safe
+
+  -#= "styles = <<EOS"
+  -#%pre= o.styles
+  -#= "EOS<br/>".html_safe
+  -#
+  -#= "scripts = <<EOS"
+  -#%pre= o.scripts
+  -#= "EOS<br/>".html_safe
+
+  = "Course.create(<br/>".html_safe
+  = "&nbsp;&nbsp;:app_id => #{o.app_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:user_id => #{o.user_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:code => '#{o.code}',<br/>".html_safe
+  = "&nbsp;&nbsp;:name => '#{o.name}',<br/>".html_safe
+  = "&nbsp;&nbsp;:title => '#{o.title}',<br/>".html_safe
+  = "&nbsp;&nbsp;:description => '#{o.description}',<br/>".html_safe
+  = "&nbsp;&nbsp;:abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:content => content,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_content => content,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:scripts => scripts,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:p_scripts => scripts,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:styles => styles,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:p_styles => styles,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:app_segment_id => #{o.app_segment_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:position => #{o.position},<br/>".html_safe
+  = "&nbsp;&nbsp;:published => #{o.published},<br/>".html_safe
+  = "&nbsp;&nbsp;:active => #{o.active}<br/>".html_safe
+  = ")<br/>".html_safe
+
+= "puts ' -- lectures'"
+%br
+- Lecture.all.each do |o|
+
+  = "abstract = <<EOS"
+  %pre= o.abstract
+  = "EOS<br/>".html_safe
+
+  = "content = <<EOS"
+  %pre= o.content
+  = "EOS<br/>".html_safe
+
+  -#= "styles = <<EOS"
+  -#%pre= o.styles
+  -#= "EOS<br/>".html_safe
+  -#
+  -#= "scripts = <<EOS"
+  -#%pre= o.scripts
+  -#= "EOS<br/>".html_safe
+
+  = "Lecture.create(<br/>".html_safe
+  = "&nbsp;&nbsp;:course_id => #{o.course_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:app_id => #{o.app_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:user_id => #{o.user_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:code => '#{o.code}',<br/>".html_safe
+  = "&nbsp;&nbsp;:name => '#{o.name}',<br/>".html_safe
+  = "&nbsp;&nbsp;:title => '#{o.title}',<br/>".html_safe
+  = "&nbsp;&nbsp;:description => '#{o.description}',<br/>".html_safe
+  = "&nbsp;&nbsp;:abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:content => content,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_content => content,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:scripts => scripts,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:p_scripts => scripts,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:styles => styles,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:p_styles => styles,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:app_segment_id => #{o.app_segment_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:position => #{o.position},<br/>".html_safe
+  = "&nbsp;&nbsp;:published => #{o.published},<br/>".html_safe
+  = "&nbsp;&nbsp;:active => #{o.active}<br/>".html_safe
+  = ")<br/>".html_safe
+
+= "puts ' -- quizzes'"
+%br
+- Quiz.all.each do |o|
+
+  = "abstract = <<EOS"
+  %pre= o.abstract
+  = "EOS<br/>".html_safe
+
+  = "content = <<EOS"
+  %pre= o.content
+  = "EOS<br/>".html_safe
+
+  -#= "styles = <<EOS"
+  -#%pre= o.styles
+  -#= "EOS<br/>".html_safe
+  -#
+  -#= "scripts = <<EOS"
+  -#%pre= o.scripts
+  -#= "EOS<br/>".html_safe
+
+  = "Quiz.create(<br/>".html_safe
+  = "&nbsp;&nbsp;:lecture_id => #{o.lecture_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:app_id => #{o.app_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:user_id => #{o.user_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:code => '#{o.code}',<br/>".html_safe
+  = "&nbsp;&nbsp;:name => '#{o.name}',<br/>".html_safe
+  = "&nbsp;&nbsp;:title => '#{o.title}',<br/>".html_safe
+  = "&nbsp;&nbsp;:description => '#{o.description}',<br/>".html_safe
+  = "&nbsp;&nbsp;:abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:content => content,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_content => content,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:scripts => scripts,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:p_scripts => scripts,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:styles => styles,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:p_styles => styles,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:app_segment_id => #{o.app_segment_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:position => #{o.position},<br/>".html_safe
+  = "&nbsp;&nbsp;:published => #{o.published},<br/>".html_safe
+  = "&nbsp;&nbsp;:active => #{o.active}<br/>".html_safe
+  = ")<br/>".html_safe
+
+= "puts ' -- questions'"
+%br
+- Question.all.each do |o|
+
+  = "abstract = <<EOS"
+  %pre= o.abstract
+  = "EOS<br/>".html_safe
+
+  = "content = <<EOS"
+  %pre= o.content
+  = "EOS<br/>".html_safe
+
+  - if o.respond_to?(:question_text)
+    = "question_text = <<EOS"
+    %pre= o.question_text
+    = "EOS<br/>".html_safe
+    
+  -#= "styles = <<EOS"
+  -#%pre= o.styles
+  -#= "EOS<br/>".html_safe
+  -#
+  -#= "scripts = <<EOS"
+  -#%pre= o.scripts
+  -#= "EOS<br/>".html_safe
+
+  = "Question.create(<br/>".html_safe
+  = "&nbsp;&nbsp;:quiz_id => #{o.quiz_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:app_id => #{o.app_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:user_id => #{o.user_id || 'nil'},<br/>".html_safe
+  = "&nbsp;&nbsp;:code => '#{o.code}',<br/>".html_safe
+  = "&nbsp;&nbsp;:name => '#{o.name}',<br/>".html_safe
+  = "&nbsp;&nbsp;:title => '#{o.title}',<br/>".html_safe
+  = "&nbsp;&nbsp;:description => '#{o.description}',<br/>".html_safe
+  = "&nbsp;&nbsp;:abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_abstract => abstract,<br/>".html_safe
+  = "&nbsp;&nbsp;:content => content,<br/>".html_safe
+  = "&nbsp;&nbsp;:p_content => content,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:scripts => scripts,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:p_scripts => scripts,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:styles => styles,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:p_styles => styles,<br/>".html_safe
+  -#= "&nbsp;&nbsp;:app_segment_id => #{o.app_segment_id || 'nil'},<br/>".html_safe
+  - if o.respond_to?(:question_text)
+    = "&nbsp;&nbsp;:question_text => question_text,<br/>".html_safe
+    = "&nbsp;&nbsp;:p_question_text => question_text,<br/>".html_safe
+  - Question::ANSWER_PREFIX.each do |q|
+    = "&nbsp;&nbsp;:answer_#{q} => '".html_safe    + o.send("answer_#{q}")        + "',<br/>".html_safe
+    = "&nbsp;&nbsp;:p_answer_#{q} => '".html_safe  + o.send("p_answer_#{q}")      + "',<br/>".html_safe
+    = "&nbsp;&nbsp;:correct_#{q} => ".html_safe   + o.send("correct_#{q}").to_s   + ",<br/>".html_safe
+    = "&nbsp;&nbsp;:p_correct_#{q} => ".html_safe + o.send("p_correct_#{q}").to_s + ",<br/>".html_safe
+  = "&nbsp;&nbsp;:position => #{o.position},<br/>".html_safe
+  = "&nbsp;&nbsp;:published => #{o.published},<br/>".html_safe
+  = "&nbsp;&nbsp;:active => #{o.active}<br/>".html_safe
+  = ")<br/>".html_safe

@@ -1,0 +1,17 @@
+- log_object_view '/snipplets/show'
+
+= render :partial=>'/layouts/admin/filters'
+
+.top_actions.buttons
+  = link_to 'list', snipplets_path, :class=>'list'
+  = link_to 'new', new_snipplet_path, :class=>'new'
+  = buttons_divider
+  - if @object.active
+    = link_to 'disable', "/snipplets/#{@object.id}/activate", :class=>'disable'
+  - else
+    = link_to 'activate', "/snipplets/#{@object.id}/activate", :class=>'activate'
+  = link_to 'publish', "/snipplets/#{@object.id}/publish", :class=>'publish'
+  
+
+= render :partial=>'/shared/admin/show_object'
+

@@ -1,0 +1,27 @@
+- log_object_partial '/users/list'
+
+- items  ||= @objects
+- title  ||= 'Usres'
+- sorter ||= controller.action_name == 'index' 
+
+
+.block
+  .title= safe title
+  .content
+    %table
+      %tr
+        %th.key.w60px= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th.w200px= RFilterHelper.sort_by_link('Name','name',@filter,sorter)
+        %th= RFilterHelper.sort_by_link('Email','email',@filter,sorter)
+        %th.w100px.acenter= RFilterHelper.sort_by_link('Role','role_id',@filter,sorter)
+        %th.w80px.acenter= RFilterHelper.sort_by_link('Active','active',@filter,sorter)
+
+      - reset_cycle
+      - items.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px= RDisplay.id_link(item)
+          %td.w200px= RDisplay.str(item.name)
+          %td= RDisplay.str(item.email)
+          %td.w100px.acenter= item.role_str
+          %td.w80px.acenter= RDisplay.yn_with_style_n(item.active)
+

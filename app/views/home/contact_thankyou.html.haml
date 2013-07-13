@@ -1,0 +1,7 @@
+%h1= 'Thank You'
+
+- if @page
+  = safe Parser.parse(@page.p_content)
+
+- else
+  %h5.error= 'Static text needed.'

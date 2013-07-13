@@ -1,0 +1,18 @@
+- log_object_view 'css_styles/edit'
+
+.top_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/css_styles/#{@object.id}?show[details]=yes")
+    = RDisplay.submit_form_link("edit_css_style_#{@object.id}")
+
+= view_title @object, :edit
+
+= form_for(@object,:url=>"/css_styles/#{@object.id}/update_styles") do |f|
+
+  = render :partial=>'/shared/admin/form_errors'
+  = render :partial=>'/shared/admin/form_details', :locals=>{:f=>f}
+          
+.form_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/css_styles/#{@object.id}?show[details]=yes")
+    = RDisplay.submit_form_link("edit_css_style_#{@object.id}")

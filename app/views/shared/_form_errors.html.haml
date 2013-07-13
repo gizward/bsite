@@ -1,0 +1,11 @@
+- log_shared_partial '/shared/form_errors'
+
+- item   ||= @object
+
+- if item.errors.any?
+  #error_explanation
+    %h2= "OOps!"
+    %ul
+      - item.errors.each do |atr,msg|
+        %li= msg.html_safe
+        

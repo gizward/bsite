@@ -1,0 +1,30 @@
+- log_object_partial '/css_styles/list'
+
+- items  ||= @objects
+- title  ||= 'CSS Styles'
+- sorter ||= controller.action_name == 'index' 
+
+.block
+  .title= safe title
+  .content
+    %table
+      %tr
+        %th.key.w60px= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th.w120px.acenter= RFilterHelper.sort_by_link('Segment','app_segment_id',@filter,sorter)
+        %th.w120px= RFilterHelper.sort_by_link('Name','name',@filter,sorter)
+        %th= RFilterHelper.sort_by_link('Title','title',@filter,sorter)
+        %th.w60px.aright= RFilterHelper.sort_by_link('Pos','position',@filter,sorter)
+        %th.w80px.aright= RFilterHelper.sort_by_link('Calc','calc_pos',@filter,sorter)
+        %th.w100px.aright= 'Status'
+
+      - reset_cycle
+      - items.each do |item| 
+        %tr{:class=>"#{item.status_raw} #{cycle('odd','even')}"}
+          %td.key.w60px= RDisplay.id_link(item)
+          %td.w120px.acenter= RDisplay.with_style(item.app_segment)
+          %td.w120px= RDisplay.str(item.name)
+          %td= RDisplay.str(item.title)
+          %td.w60px.aright= RDisplay.count(item.position)
+          %td.w80px.aright= RDisplay.count(item.calc_pos)
+          %td.w100px.aright= RDisplay.str(item.status_str)
+

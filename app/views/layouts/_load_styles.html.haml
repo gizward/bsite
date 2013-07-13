@@ -1,0 +1,32 @@
+- segments ||= get_segments
+
+%style
+
+  - CssStyle.ns_for(segments).ns_published.ns_active.ns_ordered.each do |s|
+    = "/*============================================================*//*STYLE:#{s.app_segment.code}.#{s.code}(#{s.position})*/"
+    = load_style s
+    = "/*============================================================*//*EOF.STYLE:#{s.app_segment.code}.#{s.code}(#{s.position})*/"
+
+  - @std_snipplets.each_value do |snipplet|
+    - if snipplet && !snipplet.p_styles.blank?
+      = "/*============================================================*//*SNIPPLET:#{snipplet.app_segment.code}.#{snipplet.code}(#{snipplet.position})*/"
+      = load_style snipplet
+      = "/*============================================================*//*EOF.SNIPPLET:#{snipplet.app_segment.code}.#{snipplet.code}(#{snipplet.position})*/"
+
+  - if @object && !@object.class.name == 'CssStyle'
+    = "/*============================================================*//*OBJECT:#{@object.code}*/"
+    = load_style @object
+    = "/*============================================================*//*EOF.OBJECT:#{@object.code}*/"
+  
+  - if @page && !@page.p_styles.blank?
+    = "/*============================================================*//*PAGE:#{@page.code}*/"
+    = load_style @page
+    = "/*============================================================*//*EOF.PAGE:#{@page.code}*/"
+
+  - @additional_snipplets.each do |s|
+    - if !s.p_styles.blank?
+      = "/*============================================================*//*ASNIPPLET:#{s.app_segment.code}.#{s.code}(#{s.position})*/"
+      = load_style s
+      = "/*============================================================*//*EOF.ASNIPPLET:#{s.app_segment.code}.#{s.code}(#{s.position})*/"
+
+- log_layout_loader "load_styles <i>(#{@style_objects.size})</i>"

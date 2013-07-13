@@ -1,0 +1,12 @@
+- log_object_partial '/users/form_details'
+
+- item ||= f.object
+
+.block
+  .title= 'Details'
+  .content
+    %table
+      %tbody
+        = RDisplay.row('Name',f.text_field(:name))
+        = RDisplay.row('Email',f.text_field(:email,:class=>'required'))
+        = RDisplay.row('Role',RForm.select_int_from_str_array(item,:role_id,User::ROLES))

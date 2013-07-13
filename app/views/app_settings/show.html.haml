@@ -1,0 +1,82 @@
+- log_object_view '/app_settings/show'
+
+- item       ||= @object
+- table_name ||= item.class.name.tableize
+- class_name ||= table_name.singularize
+
+= render :partial=>'/shared/admin/filters'
+
+.top_actions.buttons
+  .buttons_inner
+    -#= link_to 'list', app_settings_path
+    -#= link_to 'edit', edit_app_setting_path(@object), :class=>'hi'
+    = '&nbsp;'.html_safe
+
+= view_title @object, :show
+
+.tabs
+  = link_to "Details",    "?show[details]=yes", :class=>tabs_here(params[:show],'details',true)
+  = link_to "Globals",    "?show[global]=yes",  :class=>tabs_here(params[:show],'global')
+  = tabs_divider
+  = link_to "Home",           "?show[home]=yes",    :class=>tabs_here(params[:show],'home')
+  = link_to "Blog",           "?show[blog]=yes",    :class=>tabs_here(params[:show],'blog')
+  = link_to "Forum",          "?show[forum]=yes",   :class=>tabs_here(params[:show],'forum')
+  = link_to "Store",          "?show[store]=yes",   :class=>tabs_here(params[:show],'store')
+  = link_to "School",         "?show[school]=yes",  :class=>tabs_here(params[:show],'school')
+  = tabs_divider
+  = link_to "Authentication", "?show[auth]=yes",    :class=>tabs_here(params[:show],'auth')
+  = link_to "User",           "?show[user]=yes",    :class=>tabs_here(params[:show],'user')
+  = tabs_divider
+  = link_to "Admin",      "?show[admin]=yes",   :class=>tabs_here(params[:show],'admin')
+
+.undertabs
+
+  - if params[:show] == nil || params[:show] && params[:show][:details]
+    .top_actions.buttons
+      = link_to 'edit details', "/#{table_name}/#{item.id}/edit", :class=>'edit'
+    = render :partial=>"show_details"
+
+  - elsif params[:show] && params[:show][:global]
+    .top_actions.buttons
+      = link_to 'edit global settings', "/#{table_name}/#{item.id}/edit_global", :class=>'edit'
+    = render :partial=>"show_global"
+
+  - elsif params[:show] && params[:show][:home]
+    .top_actions.buttons
+      = link_to 'edit home settings', "/#{table_name}/#{item.id}/edit_home", :class=>'edit'
+    = render :partial=>"show_fields"
+
+  - elsif params[:show] && params[:show][:blog]
+    .top_actions.buttons
+      = link_to 'edit blog settings', "/#{table_name}/#{item.id}/edit_blog", :class=>'edit'
+    = render :partial=>"show_fields", :locals=>{:prefix=>'blog'}
+
+  - elsif params[:show] && params[:show][:forum]
+    .top_actions.buttons
+      = link_to 'edit forum settings', "/#{table_name}/#{item.id}/edit_forum", :class=>'edit'
+    = render :partial=>"show_fields", :locals=>{:prefix=>'forum'}
+
+  - elsif params[:show] && params[:show][:store]
+    .top_actions.buttons
+      = link_to 'edit store settings', "/#{table_name}/#{item.id}/edit_store", :class=>'edit'
+    = render :partial=>"show_fields", :locals=>{:prefix=>'store'}
+
+  - elsif params[:show] && params[:show][:school]
+    .top_actions.buttons
+      = link_to 'edit school settings', "/#{table_name}/#{item.id}/edit_school", :class=>'edit'
+    = render :partial=>"show_fields", :locals=>{:prefix=>'school'}
+
+  - elsif params[:show] && params[:show][:user]
+    .top_actions.buttons
+      = link_to 'edit user settings', "/#{table_name}/#{item.id}/edit_user", :class=>'edit'
+    = render :partial=>"show_fields", :locals=>{:prefix=>'user'}
+
+  - elsif params[:show] && params[:show][:auth]
+    .top_actions.buttons
+      = link_to 'edit authentication settings', "/#{table_name}/#{item.id}/edit_auth", :class=>'edit'
+    = render :partial=>"show_fields", :locals=>{:prefix=>'auth'}
+
+  - elsif params[:show] && params[:show][:admin]
+    .top_actions.buttons
+      = link_to 'edit admin settings', "/#{table_name}/#{item.id}/edit_admin", :class=>'edit'
+    = render :partial=>"show_fields", :locals=>{:prefix=>'admin'}

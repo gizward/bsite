@@ -1,0 +1,26 @@
+- log_object_partial '/courses/list'
+
+- items  ||= @objects
+- title  ||= 'Courses'
+- sorter ||= controller.action_name == 'index' 
+
+.block
+  .title= safe title
+  .content
+    %table
+      %tr
+        %th.key.w60px.acenter= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th.w120px.aleft= RFilterHelper.sort_by_link('Name','name',@filter,sorter)
+        %th.aleft= RFilterHelper.sort_by_link('Title','title',@filter,sorter)
+        %th.w100px.aright.low= 'Lectures'
+        %th.w100px.aright.low= 'Status'
+
+      - reset_cycle
+      - items.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px.acenter= RDisplay.id_link(item)
+          %td.w120px= RDisplay.str(item.name)
+          %td= RDisplay.str(item.title)
+          %td.w100px.aright= RDisplay.count(item.lectures.size)
+          %td.w100px.aright= RDisplay.str(item.status_str)
+

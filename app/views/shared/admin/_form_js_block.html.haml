@@ -1,0 +1,15 @@
+- log_shared_partial '/shared/admin/form_js_block'
+
+- item ||= @object
+- if item
+
+  - table_name ||= item.class.name.tableize
+  - class_name ||= table_name.singularize
+  - field_name ||= 'scripts'
+  - rows       ||= 40
+  
+  .block.for_text_entry
+    .title= field_name.titleize
+    .content
+      .text_entry= f.text_area(field_name.to_sym,:rows=>rows, :class=>'code js')
+

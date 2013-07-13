@@ -1,0 +1,28 @@
+- log_object_partial '/blogs/list'
+
+- items  ||= @objects
+- title  ||= 'Blogs'
+- sorter ||= controller.action_name == 'index' 
+
+.block
+  .title= 'List'
+  .content
+    %table
+      %tr
+        %th.key.w60px= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th.w100px= RFilterHelper.sort_by_link('Date','posting_date',@filter,sorter)
+        %th= RFilterHelper.sort_by_link('Title','title',@filter,sorter)
+        %th.w30px.aright.low{:title=>'Tags'}= 'T'
+        %th.w30px.aright.low{:title=>'Comments'}= 'C'
+        %th.w100px.aright= 'Status'
+
+      - reset_cycle
+      - @objects.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px= RDisplay.id_link(item)
+          %td.w100px= RDisplay.date(item.posting_date)
+          %td= RDisplay.str(item.title)
+          %td.w30px.aright= RDisplay.count(item.tags.size)
+          %td.w30px.aright= RDisplay.count(item.comments.size)
+          %td.w100px.aright= RDisplay.str(item.status_str)
+

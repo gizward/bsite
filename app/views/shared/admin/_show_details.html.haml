@@ -1,0 +1,66 @@
+- log_shared_partial '/shared/admin/show_details'
+
+- item ||= @object
+
+- if item
+
+  .block
+    .title= "Details"
+    .content
+      %table
+        = RDisplay.id_row(item)
+        = RDisplay.data_row(item,:code)
+        = RDisplay.data_row(item,:name)
+        = RDisplay.data_row(item,:title)
+        = RDisplay.data_row(item,:description)
+        - if item.respond_to?(:position)
+          = RDisplay.row('Position',RDisplay.int(item.position))
+        - if item.respond_to?(:category)
+          = RDisplay.row('Category',RDisplay.with_style(item.category,:name))
+        - if item.respond_to?(:app_segment)
+          = RDisplay.row('Segment',RDisplay.with_style(item.app_segment))
+
+  - if item.class.name == 'Blog'
+    .block
+      .title= "Details (cont.)"
+      .content
+        %table
+          = RDisplay.row('Tags',RDisplay.str(item.get_tags_str))
+
+  - elsif item.class.name == 'Product'
+    .block
+      .title= "Details (cont.)"
+      .content
+        %table
+          = RDisplay.row('Price',RDisplay.cents(item.price))
+          = RDisplay.row('Options',RDisplay.str(item.options_str))
+          = RDisplay.row('Categories',RDisplay.str(item.get_cats_str))
+
+  - if item.respond_to?(:status_str)
+    .block
+      .title= "Status"
+      .content
+        %table.first
+          %tbody
+            = RDisplay.row('Status',status_for(item))
+        - c = 'last'
+        - c = 'next' if item.respond_to?(:answer_a)
+        %table{:class=>c}
+          %tbody
+            - if item.respond_to?(:abstract)
+              = RDisplay.row('Abstract',changed?(item.abstract,item.p_abstract))
+            - if item.respond_to?(:content)
+              = RDisplay.row('Content',changed?(item.content,item.p_content))
+            - if item.respond_to?(:styles)
+              = RDisplay.row('CSS Styles',changed?(item.styles,item.p_styles))
+            - if item.respond_to?(:scripts)
+              = RDisplay.row('JS Scripts',changed?(item.scripts,item.p_scripts))
+        - if item.respond_to?(:answer_a)
+          %table.last
+            %tbody
+              - if item.respond_to?(:question_text)
+                = RDisplay.row('Question Text',changed?(item.question_text,item.p_question_text))
+              - i = 0
+              - Question::ANSWER_PREFIX.each do |q|
+                - i += 1
+                = RDisplay.row("Answer #{i}.",changed?(item.send("answer_#{q}"),item.send("p_answer_#{q}"))+" "+changed?(item.send("correct_#{q}"),item.send("p_correct_#{q}")))

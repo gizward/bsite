@@ -1,0 +1,43 @@
+- log_object_partial "/app_settings/show_fields"
+
+- item   ||= @object
+- prefix ||= 'home'
+- title  ||= prefix.titleize
+
+- log_object_partial "app_settings/show_fields (#{title})"
+
+- if item.respond_to?("#{prefix.to_s}_enable")
+  .block
+    .title= "<b>#{title}</b> Access Flags".html_safe
+    .content
+      %table
+        = RDisplay.row('Enabled',RDisplay.yn_with_style_y(item.send("#{prefix}_enable".to_sym)))
+        = RDisplay.row('Requires Login',RDisplay.yn_with_style_y(item.send("#{prefix}_requires_auth".to_sym)))
+
+.block
+  .title= "<b>#{title}</b> Meta Tags".html_safe
+  .content
+    %table
+      = RDisplay.data_row(item,"#{prefix}_meta_title".to_sym)
+      = RDisplay.data_row(item,"#{prefix}_meta_dscr".to_sym)  
+      = RDisplay.data_row(item,"#{prefix}_meta_keywords".to_sym)  
+      = RDisplay.data_row(item,"#{prefix}_meta_author".to_sym)  
+      = RDisplay.data_row(item,"#{prefix}_meta_robots".to_sym)  
+      = RDisplay.data_row(item,"#{prefix}_favicon".to_sym)  
+  
+.block
+  .title= "<b>#{title}</b> Display Switches".html_safe
+  .content
+    %table
+      - %w(userbar overheader header underheader nav1 nav2 menu1 menu2 overfooter footer underfooter credits).each do |field|
+        = RDisplay.row("Show #{field.titleize}",RDisplay.yn_with_style_y(item.send("#{prefix}_show_#{field}".to_sym)))
+
+- if prefix == 'auth'  
+  .block
+    .title= "<b>Authentication</b> Paths".html_safe
+    .content
+      %table
+        = RDisplay.data_row(@object,:after_login_path)
+        = RDisplay.data_row(@object,:after_logout_path)
+
+  

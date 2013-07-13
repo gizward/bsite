@@ -1,0 +1,8 @@
+- log_object_partial '/blogs/form_details'
+
+.block
+  .title= 'Tags'
+  .content
+    %table
+      = RDisplay.row('Tags',f.text_field(:tags_str,:class=>'long'))
+        

@@ -1,0 +1,28 @@
+- log_object_partial '/products/list'
+
+- items  ||= @objects
+- title  ||= 'Products'
+- sorter ||= controller.action_name == 'index' 
+
+.block
+  .title= safe title
+  .content
+    %table
+      %tr
+        %th.key.w60px= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th= RFilterHelper.sort_by_link('Name','name',@filter,sorter)
+        %th.w100px.aright= RFilterHelper.sort_by_link('Price','price',@filter,sorter)
+        %th.w30px.aright.low{:title=>'Categories'}= 'C'
+        %th.w30px.aright.low{:title=>'Comments'}= 'C'
+        %th.w100px.aright= 'Status'
+
+      - reset_cycle
+      - items.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px= RDisplay.id_link(item)
+          %td= RDisplay.str(item.name)
+          %td.w100px.aright= RDisplay.cents(item.price)
+          %td.w30px.aright= RDisplay.count(item.categories.size)
+          %td.w30px.aright= RDisplay.count(item.comments.size)
+          %td.w100px.aright= RDisplay.str(item.status_str)
+

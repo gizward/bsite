@@ -1,0 +1,28 @@
+- log_object_partial '/pages/list'
+
+- items  ||= @objects
+- title  ||= 'Pages'
+- sorter ||= controller.action_name == 'index' 
+
+.block
+  .title= safe title
+  .content
+    %table
+      %tr
+        %th.key.w60px.acenter= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th.w120px.acenter= RFilterHelper.sort_by_link('Segment','app_segment_id',@filter,sorter)
+        %th.w120px.aleft= RFilterHelper.sort_by_link('Name','name',@filter,sorter)
+        %th.aleft= RFilterHelper.sort_by_link('Title','title',@filter,sorter)
+        %th.w60px.aright= 'Pos'
+        %th.w100px.aright.low= 'Status'
+
+      - reset_cycle
+      - items.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px.acenter= RDisplay.id_link(item)
+          %td.w120px.acenter= RDisplay.with_style(item.app_segment)
+          %td.w120px= RDisplay.str(item.name)
+          %td= RDisplay.str(item.title)
+          %td.w60px.aright= RDisplay.count(item.position)
+          %td.w100px.aright= RDisplay.str(item.status_str)
+

@@ -1,0 +1,20 @@
+- log_object_view '/user/index'
+
+%h1= 'User Control Panel'
+%hr
+
+- if current_user && current_user.role_id >= User::ADMIN
+
+  - if @objects
+    %h2= 'Registered Users'
+    %ul
+      - @objects.each do |obj|
+        %li= "<b><a href='/user/#{obj.id}'>#{obj.name}</a></b> (#{User::ROLES[obj.role_id]})".html_safe
+  
+  - else
+    %h1.error= "No registered users"
+    %p= "/user/index"
+    
+- else
+
+  %h1.error= 'You are not authorized to see this page!'

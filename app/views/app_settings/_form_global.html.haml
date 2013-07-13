@@ -1,0 +1,23 @@
+- log_object_partial '/app_settings/form_global'
+
+- prefix   = 'global'
+- title  ||= prefix.titleize
+
+.block
+  .title= "<b>#{title}</b> Meta Tags".html_safe
+  .content
+    %table
+      = RDisplay.row("Meta Title",f.text_field("#{prefix}_meta_title".to_sym))
+      = RDisplay.row("Meta Dscr",f.text_field("#{prefix}_meta_dscr".to_sym))
+      = RDisplay.row("Meta Keywords",f.text_field("#{prefix}_meta_keywords".to_sym))
+      = RDisplay.row("Meta Author",f.text_field("#{prefix}_meta_author".to_sym))
+      = RDisplay.row("Meta Robots",f.text_field("#{prefix}_meta_robots".to_sym))
+      = RDisplay.row("Favicon URL",f.text_field("#{prefix}_favicon".to_sym))
+  
+.block
+  .title= 'Developer Stuff'
+  .content
+    %table
+      = RDisplay.row('Show Admin Bar',f.check_box(:global_show_admbar))
+      = RDisplay.row('Show Developer Bar',f.check_box(:global_show_devbar))
+  

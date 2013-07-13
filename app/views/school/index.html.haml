@@ -1,0 +1,25 @@
+
+- if @page
+  = safe Parser.parse(@page.p_content)
+  
+- if @objects && @objects.size > 0
+
+  %h3= "#{@objects.size} course#{@objects.size>1 ? 's are' : ' is'} offerd at this time:"
+  
+  - @objects.each do |obj|
+    .course.block
+      - unless obj.title.blank?
+        .title= safe obj.title
+      - unless obj.description.blank?
+        .description= safe obj.description
+      - unless obj.p_abstract.blank?
+        .abstract= safe obj.p_abstract
+      %h6= "Number of lectures: #{obj.lectures.size}"
+      .links
+        = link_to "enroll", "/school/#{obj.id}/enroll"
+        |
+        = link_to "learn more &raquo;".html_safe, "/school/#{obj.id}"
+  
+- else
+  %h2= "We are sorry"
+  %p= "No courses are offered at this time."

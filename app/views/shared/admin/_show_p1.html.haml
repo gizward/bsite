@@ -1,0 +1,15 @@
+- log_shared_partial '/shared/admin/show_p1'
+
+- item ||= @object
+
+- if item.respond_to?(:p1_abstract)
+  = render :partial=>'/shared/admin/show_html_block', :locals=>{:item=>item,:field_name=>'p1_abstract'}
+
+- if item.respond_to?(:p1_content)
+  = render :partial=>'/shared/admin/show_html_block', :locals=>{:item=>item,:field_name=>'p1_content', :tabs_postfix=>'1'}
+
+- if item.respond_to?(:p1_styles)
+  = render :partial=>'/shared/admin/show_css_block',  :locals=>{:item=>item,:field_name=>'p1_styles'}
+
+- if item.respond_to?(:p1_scripts)
+  = render :partial=>'/shared/admin/show_js_block',   :locals=>{:item=>item,:field_name=>'p1_scripts'}

@@ -1,0 +1,44 @@
+- log_shared_partial '/shared/admin/show_js_block'
+
+- item ||= @object
+
+- if item
+
+  - table_name ||= item.class.name.tableize
+  - class_name ||= table_name.singularize
+  - field_name ||= 'scripts'
+  - title      ||= field_name.titleize
+
+  - data = ''
+  - data = item.try(field_name.to_sym)
+
+  .block.for_text
+
+    .title
+
+      = safe title
+
+      - if !data.blank?
+        .tabs2
+          = link_to_function "Code", "changeTab3('tab3_01')", :id=>'tab3_01_a', :class=>'here'
+          = link_to_function "Raw", "changeTab3('tab3_02')", :id=>'tab3_02_a'
+
+    .content
+
+      #tab3_01.inviso
+        - if data.blank?
+          = empty('code')
+        - else
+          .text.for_pre
+            %pre
+              = data
+
+      #tab3_02.inviso.noshow
+        - if data.blank?
+          = empty('raw')
+        - else
+          .text.for_code
+            %code
+              = data
+
+      -#.clear

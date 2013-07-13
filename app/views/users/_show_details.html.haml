@@ -1,0 +1,15 @@
+- log_object_partial '/users/show_details'
+
+- item  ||= @object
+- title ||= 'Details'
+
+.block
+  .title= safe title
+  .content
+    %table
+      = RDisplay.id_row(item)
+      = RDisplay.data_row(item,:name)
+      = RDisplay.data_row(item,:email)
+      = RDisplay.row('Role',item.role_str)
+      = RDisplay.row('Active',RDisplay.yn_with_style_n(item.active))
+

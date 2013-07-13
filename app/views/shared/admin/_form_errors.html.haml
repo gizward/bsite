@@ -1,0 +1,11 @@
+- log_shared_partial '/shared/admin/form_errors'
+
+- item ||= @object
+
+- if item.errors.any?
+  #error_explanation
+    %h2= "Found ERROR(s) -- cannot submit the form!"
+    %ul
+      - item.errors.full_messages.each do |msg|
+        %li= msg
+        

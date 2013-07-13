@@ -1,0 +1,19 @@
+- log_object_view 'products/edit'
+
+.top_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/products/#{@object.id}")
+    = RDisplay.submit_form_link("edit_product_#{@object.id}")
+
+= view_title @object, :edit
+
+= form_for(@object) do |f|
+
+  = render :partial=>'/shared/admin/form_errors'
+  = render :partial=>'/shared/admin/form_details',    :locals=>{:f=>f,:required=>[:name]}
+  = render :partial=>'form_details',                  :locals=>{:f=>f}
+          
+.form_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/products/#{@object.id}")
+    = RDisplay.submit_form_link("edit_product_#{@object.id}")

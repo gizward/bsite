@@ -1,0 +1,35 @@
+
+- field ||= :header
+- if default_show(field)
+
+  - field_name   = field.to_s
+  - segment_name = @segment.downcase
+  - cont       ||= '???'
+  - obj        ||= @std_snipplets[field]
+
+  - log_layout_loader "#{segment_name} > #{field_name}"
+  
+  - if obj 
+    - cont = 'ok'
+
+    - if !obj.p_content.blank?
+
+      - log_snipplet_object obj.title
+      %div{:id=>"#{field_name}"}
+        %div{:id=>"#{field_name}_inner", :class=>'inner'}
+          %div{:id=>"#{field_name}_inside", :class=>'inside'}
+            = safe Parser.parse(obj.p_content)
+      %div{:id=>"after_#{field_name}", :class=>'after'}
+
+    - else # blank
+      - cont = 'empty'
+
+  - else # no obj
+    - log_error "s.<b>#{segment_name} > #{field_name}</b> missing"
+    - cont = 'none'
+
+
+  -#=============================================================
+  -# Userbar-specific stuff - to be replaced by the parser+script
+  - if field == :userbar
+    = render :partial=>'/layouts/modules/userbar'

@@ -1,0 +1,23 @@
+- log_object_partial '/documents/list'
+
+- items  ||= @objects
+- title  ||= 'Documents'
+- sorter ||= controller.action_name == 'index' 
+
+.block
+  .title= 'List'
+  .content
+    %table
+      %tr
+        %th.key.w60px= RFilterHelper.sort_by_link('ID','id',@filter,sorter)
+        %th.w200px= RFilterHelper.sort_by_link('Name','name',@filter,sorter)
+        %th= RFilterHelper.sort_by_link('Title','title',@filter,sorter)
+        %th.w100px.aright= 'Status'
+
+      - reset_cycle
+      - items.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px= RDisplay.id_link(item)
+          %td.w200px= RDisplay.str(item.name)
+          %td= RDisplay.str(item.title)
+          %td.w100px.aright= RDisplay.str(item.status_str)

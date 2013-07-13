@@ -1,0 +1,24 @@
+- log_object_partial '/tags/list'
+
+- items ||= @objects
+- title ||= 'Tags'
+
+.block
+  .title= safe title
+  .content
+    %table
+      %tr
+        %th.key.w60px= 'ID'
+        %th.w100px= 'Name'
+        %th.w200px= 'Title'
+        %th= 'Description'
+        %th.w30px.aright.low{:title=>'Blogs'}= 'B'
+
+      - reset_cycle
+      - items.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px= RDisplay.id_link(item)
+          %td.w100px= RDisplay.str(item.name)
+          %td.w200px= RDisplay.str(item.title)
+          %td= RDisplay.str(item.description)
+          %td.w30px.aright= RDisplay.count(item.blogs.size)

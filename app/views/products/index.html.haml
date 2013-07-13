@@ -1,0 +1,14 @@
+- log_object_view '/products/index'
+
+= render :partial=>'/layouts/admin/filters'
+
+.top_actions.buttons
+  .buttons_inner
+    = link_to 'refresh', products_path
+    = link_to 'new', new_product_path, :class=>'new large'
+  
+= view_title 'Products', :list
+
+= render :partial=>'list'
+
+= will_paginate @objects

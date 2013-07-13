@@ -1,0 +1,19 @@
+- log_object_view "/app_settings/edit_admin"
+
+.top_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/app_settings/#{@object.id}?show[admin]=yes")
+    = RDisplay.submit_form_link("edit_app_setting_#{@object.id}")
+
+= view_title @object, :edit
+= sub_title 'Admin Fields'
+
+= form_for(@object,:url=>"/app_settings/#{@object.id}/update_admin") do |f|
+
+  = render :partial=>'/shared/admin/form_errors'
+  = render :partial=>'form_fields', :locals=>{:f=>f,:prefix=>'admin'}
+          
+.form_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/app_settings/#{@object.id}?show[admin]=yes")
+    = RDisplay.submit_form_link("edit_app_setting_#{@object.id}")

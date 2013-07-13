@@ -1,0 +1,18 @@
+
+- if @course
+
+  .course_details
+    %h1= safe @course.title
+    %h2= safe @course.description
+    
+  %hr
+  .lecture
+    %h3= safe @object.title
+    %h4= safe @object.description
+    .content
+      = safe @object.content
+      
+  
+- else
+  %h1.error= "Course Not Found..."
+  %p= "/school/#{@id}"

@@ -1,0 +1,15 @@
+- log_object_partial '/users/form_address'
+
+- item ||= f.object
+
+.block
+  .title= 'Address'
+  .content
+    %table
+      %tbody
+        = RDisplay.row('Line 1',f.text_field(:line1))
+        = RDisplay.row('Line 2',f.text_field(:line2))
+        = RDisplay.row('City',f.text_field(:city))
+        = RDisplay.row('State',f.text_field(:state))
+        = RDisplay.row('Zip',f.text_field(:zip))
+        = RDisplay.row('Country',f.text_field(:country))

@@ -1,0 +1,27 @@
+- log_object_view "/app_settings/index"
+
+= render :partial=>'/shared/admin/filters'
+
+.top_actions.buttons
+  .buttons_inner
+    = link_to 'refresh', app_settings_path
+  
+= view_title 'Application Settings', :list
+
+.block
+  .title= 'List'
+  .content
+    %table
+      %tr
+        %th.key.w60px= 'ID'
+        %th.w200px= 'Name'
+        %th= 'Description'
+
+      - reset_cycle
+      - @objects.each do |item| 
+        %tr{:class=>cycle('odd','even')}
+          %td.key.w60px= RDisplay.id_link(item)
+          %td.w200px= RDisplay.str(item.name)
+          %td= RDisplay.str(item.description)
+
+    = will_paginate @objects

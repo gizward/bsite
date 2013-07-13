@@ -1,0 +1,15 @@
+- log_object_view '/tools/index'
+
+.top_actions.buttons= '&nbsp;'.html_safe
+
+%h2= 'Reports'
+
+%ul
+  %li
+    = link_to 'Dump Seeds',"/tools/seeds", :target=>'_blank'
+    = safe "-- create partial seeds file for development"
+  %li
+    = log_todo('create theme')
+  %li
+    = log_todo('load theme')
+    

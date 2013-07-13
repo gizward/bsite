@@ -1,0 +1,45 @@
+- log_shared_partial '/shared/admin/form'
+
+- if f
+
+  - item = f.object
+  - table_name ||= item.class.name.tableize
+  - class_name ||= table_name.singularize
+  - required   ||= []
+  - ck_edit      = true if ck_edit == nil
+
+  = render :partial=>'/shared/admin/form_errors', :locals=>{:item=>item}
+  
+  %h3= 'Details'
+  %table
+    = RDisplay.row('Code',f.text_field(:code,:class=>"tiny #{required.include?(:code) ? 'required' : ''}"))
+    = RDisplay.row('Name',f.text_field(:name, :class=>"short #{required.include?(:name) ? 'required' : ''}"))
+    = RDisplay.row('Title',f.text_field(:title, :class=>"normal #{required.include?(:title) ? 'required' : ''}"))
+    = RDisplay.row('Comments',f.text_field(:description,:class=>"long #{required.include?(:description) ? 'required' : ''}"))
+    - if item.respond_to?(:position)
+      = RDisplay.row('Position',f.text_field(:position,:class=>"tiny #{required.include?(:position) ? 'required' : ''}"))
+    - if item.respond_to?(:segment)
+      = RDisplay.row('Segment',f.collection_select(:segment_id,Segment.all,:id,:name,{},:class=>"#{required.include?(:segment) ? 'required' : ''}"))
+
+  - if item.respond_to?(:abstract)
+    %h3= 'Abstract'
+    .block= f.text_area :abstract, :rows=>6
+
+  - if item.respond_to?(:content)
+    %h3= 'HTML Content'
+    - if ck_edit
+      = f.cktext_area :content, :height=>400, :width=>790
+    - else
+      .block= f.text_area :content, :rows=>40
+
+  - if item.respond_to?(:tags_str)
+    %h3= 'Tags'
+    .block= f.text_area :tags_str, :rows=>2
+
+  - if item.respond_to?(:styles)
+    %h3= 'CSS Styles'
+    .block= f.text_area :styles, :rows=>40
+
+  - if item.respond_to?(:scripts)
+    %h3= 'JS Scripts'
+    .block= f.text_area :scripts, :rows=>10

@@ -1,0 +1,9 @@
+- log_object_partial "/app_settings/form_details"
+
+.block
+  .title= 'Details'
+  .content
+    %table
+      = RDisplay.row('Name',f.text_field(:name))
+      = RDisplay.row('Description',f.text_field(:description))
+

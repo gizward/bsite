@@ -1,0 +1,15 @@
+- log_object_view '/css_styles/index'
+
+= render :partial=>'/layouts/admin/filters'
+- sorter ||= controller.action_name == 'index' 
+
+.top_actions.buttons
+  .buttons_inner
+    = link_to 'refresh', css_styles_path
+    = link_to 'new', new_css_style_path, :class=>'new large'
+  
+= view_title 'Css Styles', :list
+
+= render :partial=>'list'
+
+= will_paginate @objects

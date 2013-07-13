@@ -1,0 +1,42 @@
+- log_shared_partial '/shared/admin/show_css_block'
+
+- item ||= @object
+
+- if item
+
+  - table_name ||= item.class.name.tableize
+  - class_name ||= table_name.singularize
+  - field_name ||= 'styles'
+  - title      ||= field_name.titleize
+
+  - data = ''
+  - data = item.try(field_name.to_sym)
+
+  .block.for_text
+
+    .title
+
+      = safe title
+      
+      - if !data.blank?
+        .tabs2
+          = link_to_function "Code", "changeTab2('tab2_01')", :id=>'tab2_01_a', :class=>'here'
+          = link_to_function "Raw",  "changeTab2('tab2_02')", :id=>'tab2_02_a'
+
+    .content
+    
+      #tab2_01.inviso
+        - if data.blank?
+          = empty('code')
+        - else
+          .text.for_pre
+            %pre= data
+
+      #tab2_02.inviso.noshow
+        - if data.blank?
+          = empty('raw')
+        - else
+          .text.for_code
+            %code= data
+
+      -#.clear

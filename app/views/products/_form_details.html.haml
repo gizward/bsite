@@ -1,0 +1,12 @@
+- log_object_partial '/products/form_details'
+
+- item ||= f.object
+
+.block
+  .title= 'Product Details'
+  .content
+    %table
+      %tbody
+        = RDisplay.row('Price',f.text_field(:price,:class=>"tiny"))
+        = RDisplay.row('Options',f.text_field(:options_str,:class=>"long"))
+        = RDisplay.row('Categories',f.text_field(:cats_str,:class=>"long",:value=>item.get_cats_str))

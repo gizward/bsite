@@ -1,0 +1,80 @@
+- log_layout_view "/layouts/application"
+
+- log_todo 'resources: images', :global
+- log_todo 'resources: documents', :global
+- log_todo 'feedback: emails', :global
+- log_todo 'feedback: comments', :global
+- log_todo 'developer: app_events', :global
+- log_todo 'developer: app_errors', :global
+
+
+!!!
+%html{'xmlns' => "http://www.w3.org/1999/xhtml", 'xml:lang' => "en", 'lang' => "en"}
+  %head
+    %meta{'http-equiv' => "X-UA-Compatible", 'content' => "IE=EmulateIE7" }
+    %meta{'http-equiv' => "content-type",    'content' => "text/html;charset=UTF-8"}
+    %title= meta_title
+
+    <link rel='shortcut icon' href='/favicon.ico' />
+
+    = render :partial=>'/layouts/load_styles'
+    
+    - if @segment == 'DEVISE1'
+      - log_style_object 'devise'
+      = stylesheet_link_tag 'devise'
+    
+    = javascript_include_tag 'jquery_161_min', 'jquery_platformselector'
+    = javascript_include_tag 'rails', 'application'
+
+    = render :partial=>'/layouts/load_scripts'
+
+    - if @html_head && !@html_head.p_content.blank?
+      = safe @html_head.content
+
+  %body
+  
+    %table#main
+      %tbody
+        %tr#main_tr
+          %td#main_td
+
+            = render :partial=>'/layouts/load_module', :locals=>{:field=>:userbar}
+            
+            #wrapper
+              #wrapper_inner
+                #wrapper_inside
+
+                  = render :partial=>'/layouts/load_module', :locals=>{:field=>:overheader}
+                  = render :partial=>'/layouts/load_module', :locals=>{:field=>:header}
+                  = render :partial=>'/layouts/load_module', :locals=>{:field=>:underheader}
+
+                  - if @segment == 'ADMIN'
+                    = render :partial=>'/layouts/admin/navigation'
+                  - else
+                    = render :partial=>'/layouts/load_module', :locals=>{:field=>:navigation}
+
+                  - if @segment == 'ADMIN'
+                    #filters_block
+                      #filters_inner
+                        #filters_inside= yield :filters
+                    #after_filters
+
+                  #page
+                    #page_inner
+                      #page_inside= yield
+                  #after_page
+                  
+                  = render :partial=>'/layouts/load_module', :locals=>{:field=>:overfooter}
+                  = render :partial=>'/layouts/load_module', :locals=>{:field=>:footer}
+                  = render :partial=>'/layouts/load_module', :locals=>{:field=>:underfooter}
+                  
+                  .clear
+
+            = render :partial=>'/layouts/load_module', :locals=>{:field=>:credits}
+    
+    = render :partial=>'/layouts/admin/sidebar_adm'
+    = render :partial=>'/layouts/admin/sidebar_dev'
+
+    - if @html_foot && !@html_foot.p_content.blank?
+      = safe @html_foot.p_content
+

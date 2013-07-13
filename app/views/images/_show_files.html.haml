@@ -1,0 +1,29 @@
+- log_object_partial '/images/show_files'
+
+- item ||= @object
+
+.block
+  .title= 'Attached Image Files'
+  .content
+
+    - if item.image_attachments.size == 0
+      %p.red There is no image files attached to this Image Object.
+
+    - else
+      %table.va_middle
+        %tbody
+          %tr
+            %th.w80px.a-left= 'Thumb'
+            %th.a-left= 'File'
+            %th.w-date= 'Date'
+            %th.w-id.low= 'Active?'
+          - item.image_attachments.ns_order_by_id_desc.each do |ia|
+            %tr{:class=>cycle('odd','even')}
+              %td.w80px.a-center
+                - if ia.active
+                  = image_tag ia.url(:thumb)
+                - else
+                  = '--'
+              %td= link_to ia.url(:original), ia.url(:original), :target=>'_blank', :class=>(ia.active ? '' : 'disabled')
+              %td.w-date= RDisplay.date(ia.created_at)
+              %td.w-id.a-center= RDisplay.yn_with_style_y(ia.active)

@@ -1,0 +1,13 @@
+- log_object_view '/snipplets/index'
+
+= render :partial=>'/layouts/admin/filters'
+
+.top_actions.buttons
+  = link_to 'refresh', snipplets_path
+  = link_to 'new', new_snipplet_path, :class=>'new large'
+  
+= view_title 'Snipplets', :list
+
+= render :partial=>'list'
+
+= will_paginate @objects

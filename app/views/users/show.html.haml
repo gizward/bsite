@@ -1,0 +1,44 @@
+- log_object_view '/users/show'
+
+= render :partial=>'/layouts/admin/filters'
+
+.top_actions.buttons
+  = link_to 'list', users_path, :class=>'list'
+  = link_to 'new', new_user_path, :class=>'new'
+  = buttons_divider
+  - if @object.active
+    = link_to 'disable', "/users/#{@object.id}/activate", :class=>'disable'
+  - else
+    = link_to 'activate', "/users/#{@object.id}/activate", :class=>'activate'
+  - if @object.deletable
+    = buttons_divider
+    = link_to 'delete', "/users/#{@object.id}/delete", :confirm=>'Are you sure you wish to DELETE this User?', :class=>'delete'
+
+= view_title @object, :show
+
+.tabs
+  = link_to "Details",  "?show[details]=yes",   :class=>tabs_here(params[:show],'details',true)
+  = link_to "Address",  "?show[address]=yes",   :class=>tabs_here(params[:show],'address')
+  = link_to "Courses",  "?show[courses]=yes",   :class=>tabs_here(params[:show],'courses')
+  = tabs_divider
+  = link_to "Special",  "?show[special]=yes",   :class=>tabs_here(params[:show],'special')
+
+- if params[:show] == nil || params[:show] && params[:show][:details]
+  .top_actions.buttons
+    - if @object.editable
+      = link_to 'edit details', "/users/#{@object.id}/edit", :class=>'edit'
+    - else 
+      = "&nbsp;".html_safe
+  = render :partial=>'show_details'
+
+- elsif params[:show] && params[:show][:address]
+  .top_actions.buttons= link_to "edit address", "/users/#{@object.id}/edit_address", :class=>'edit'
+  = render :partial=>'show_address'
+- elsif params[:show] && params[:show][:courses]
+  .top_actions.buttons= "&nbsp;".html_safe
+  = render :partial=>'show_courses'
+
+- elsif params[:show] && params[:show][:special]
+  .top_actions.buttons= "&nbsp;".html_safe
+  = render :partial=>'show_special'
+

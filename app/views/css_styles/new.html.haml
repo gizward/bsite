@@ -1,0 +1,20 @@
+- log_object_view 'css_styles/new'
+
+.top_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/css_styles")
+    = RDisplay.submit_form_link("new_css_style")
+
+= view_title @object, :new
+
+= form_for(@object) do |f|
+
+  = render :partial=>'/shared/admin/form_errors'
+  = render :partial=>'/shared/admin/form_details',    :locals=>{:f=>f}
+  = render :partial=>'/shared/admin/form_css_block',  :locals=>{:f=>f}
+          
+.form_actions.buttons
+  .buttons_inner
+    = RDisplay.cancel_form_link("/css_styles")
+    = RDisplay.submit_form_link("new_css_style")
+    

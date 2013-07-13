@@ -1,0 +1,10 @@
+
+.block
+  %h5= 'Image Attachment Details'
+  %table.inner.edit
+    %tbody
+      = RDisplay.row('Name',f.text_field(:name))
+      = RDisplay.row('Image File',f.file_field(:attached_image),:row_style=>'last')
+ 
+= f.hidden_field(:image_id)
+-#= render :partial=>'/shared/hidden_fields_for_input', :locals=>{ :f=>f }

@@ -1,0 +1,11 @@
+- log_shared_partial '/shared/admin/form_meta'
+
+.block
+  .title= 'Meta Tags'
+  .content
+    %table
+      = RDisplay.row('Meta Title',f.text_field(:meta_title))
+      = RDisplay.row('Meta Description',f.text_field(:meta_dscr))
+      = RDisplay.row('Meta Author',f.text_field(:meta_author))
+      = RDisplay.row('Meta Keywords',f.text_field(:meta_keywords))
+      = RDisplay.row('Meta Robots',f.text_field(:meta_robots))

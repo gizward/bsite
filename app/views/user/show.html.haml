@@ -1,0 +1,35 @@
+- log_object_view '/user/show'
+
+%h1= 'User Control Panel'
+%hr
+
+- if @object
+
+  - if (current_user && current_user.id == @object.id) || (current_user.role_id>=User::ADMIN)
+
+    %h2= @object.name
+    %p= "User ID: #{@object.id}"
+    
+    %h4= 'Current courses:' 
+    - current = @object.current_courses
+    - if current.size == 0
+      = 'none'
+    - else
+      %ul
+        - current.each do |c|
+          %li= c.title
+                    
+    %h4= 'Completed courses:'
+    - completed = @object.completed_courses
+    - if completed.size == 0
+      = 'none'
+    - else
+      %ul
+        - completed.each do |c|
+          %li= c.title
+  
+  - else
+    %h2.error= 'You are not authorized to see this page!'
+- else
+  %h2.error= "User Not Found..."
+  %p= "/user/#{@id}"

@@ -1,0 +1,73 @@
+%h1= 'Course Enrollment'
+
+- if @page
+  = safe Parser.parse(@page.p_content)
+%hr
+%br
+
+- if @course
+
+  #enrollment_course_info
+
+    %h2= @course.title
+    %h4= @course.description
+    = safe @course.p_abstract
+    %h6= "Number of lectures: #{@course.lectures.size}"
+
+  #enrollment_form
+  
+    %h2= 'Enrollment Form'
+
+    = form_for(@object,:url=>"/school/#{@course.id}/enroll_submit") do |f|
+    
+      = render :partial=>'/shared/admin/form_errors'
+      = f.hidden_field(:course_id)
+      = f.hidden_field(:creator_id)
+      
+      .block
+    
+        %h4= 'Personal Information:'
+        %table
+          %tbody
+            = RDisplay.row('Name',f.text_field(:user_name))
+            = RDisplay.row('Email',f.text_field(:user_email))
+            %tr
+              %td.label= ''
+              %td.data
+                %span.note= 'Note:'
+                = "By entering somebody else's name and email you can gift this course to another person."
+                = "If needed, a new account will be created and registration email sent."
+            = RDisplay.row('Reference Email',f.text_field(:reference_email))
+            %tr
+              %td.label= ''
+              %td.data
+                %span.note= 'Note:'
+                = "Reference email, if different than main email, will be notified about progress."
+                = "This can be useful when course is gifted to another person."
+            
+
+
+        %h4= 'Credit Card Information:'
+        %table
+          %tbody
+            = RDisplay.row('Cardholder Name',f.text_field(:cc_name))
+            = RDisplay.row('Card Type',f.text_field(:cc_type,:class=>'short'))
+            = RDisplay.row('Number',f.text_field(:cc_number,:class=>'short'))
+            = RDisplay.row('CVS',f.text_field(:cc_cvs,:class=>'tiny'))
+            = RDisplay.row('Expiry Date',f.text_field(:cc_date,:class=>'tiny'))
+            %tr
+              %td.label= ''
+              %td.data
+                %span.note= 'Note:'
+                = "We are not storing your full credit information."
+
+    .form_actions.buttons
+      .buttons_inner
+        = RDisplay.cancel_form_link("/school/#{@course.id}") 
+        |
+        = RDisplay.submit_form_link("new_enrollment",:label=>'Submit')
+    
+- else
+
+  %h4.error= "No course with ID=#{@id} found."
+  

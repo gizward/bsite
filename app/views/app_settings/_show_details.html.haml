@@ -1,0 +1,14 @@
+- log_object_partial "/app_settings/show_details"
+
+- item ||= @object
+
+.block
+  .title= "Details"
+  .content
+    %table
+      = RDisplay.id_row(item)
+      = RDisplay.data_row(item,:code)
+      = RDisplay.data_row(item,:name)
+      = RDisplay.data_row(item,:title)
+      = RDisplay.data_row(item,:description)
+

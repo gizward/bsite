@@ -1,0 +1,16 @@
+- log_object_view '/users/edit_roles'
+
+.top_actions.buttons
+  = RDisplay.cancel_form_link("/users/#{@object.id}?show[roles]=yes")
+  = RDisplay.submit_form_link("edit_user_#{@object.id}")
+
+= view_title @object, :edit
+
+= form_for(@object) do |f|
+
+  = render :partial=>'/shared/admin/form_errors'
+  = render :partial=>'form_roles', :locals=>{:f=>f}
+          
+.form_actions.buttons
+  = RDisplay.cancel_form_link("/users/#{@object.id}?show[roles]=yes")
+  = RDisplay.submit_form_link("edit_user_#{@object.id}")

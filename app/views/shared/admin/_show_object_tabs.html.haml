@@ -1,0 +1,190 @@
+- log_shared_partial '/shared/admin/show_object_tabs'
+
+- item ||= @object
+
+- if item
+
+  - table_name ||= item.class.name.tableize
+  - class_name ||= table_name.singularize
+
+  .tabs
+
+    = link_to "Details", "?show[details]=yes", :class=>tabs_here(params[:show],'details',true)
+    - if item.respond_to?(:options)
+      = link_to "Options", "?show[options]=yes", :class=>tabs_here(params[:show],'options')
+    - if item.respond_to?(:meta_title)
+      = link_to "Meta", "?show[meta]=yes", :class=>tabs_here(params[:show],'meta')
+    - if item.respond_to?(:answer_a)
+      = link_to "Question &amp; Answers".html_safe, "?show[question]=yes", :class=>tabs_here(params[:show],'question')
+
+    - if item.respond_to?(:abstract) || item.respond_to?(:content) || item.respond_to?(:caption)
+      = tabs_divider
+    - if item.respond_to?(:abstract)
+      = link_to "Abstract", "?show[abstract]=yes", :class=>tabs_here(params[:show],'abstract')
+    - if item.respond_to?(:content)
+      = link_to "Content", "?show[content]=yes", :class=>tabs_here(params[:show],'content')
+    - if item.respond_to?(:caption)
+      = link_to "Caption", "?show[caption]=yes", :class=>tabs_here(params[:show],'caption')
+
+    - if item.respond_to?(:styles) || item.respond_to?(:scripts)
+      = tabs_divider
+    - if item.respond_to?(:styles)
+      = link_to "Styles", "?show[styles]=yes", :class=>tabs_here(params[:show],'styles')
+    - if item.respond_to?(:scripts)
+      = link_to "Scripts", "?show[scripts]=yes", :class=>tabs_here(params[:show],'scripts')
+
+    - if item.respond_to?(:tags) || item.respond_to?(:categories)
+      = tabs_divider
+    - if item.respond_to?(:tags)
+      - count = item.tags.size
+      = link_to "Tags (#{count})", "?show[tags]=yes", :class=>tabs_here(params[:show],'tags')
+    - if item.respond_to?(:categories)
+      - count = item.categories.size
+      = link_to "Categories (#{count})", "?show[categories]=yes", :class=>tabs_here(params[:show],'categories')
+
+    - if item.respond_to?(:image_attachments) || item.respond_to?(:video_attachments) || item.respond_to?(:document_attachments)
+      = tabs_divider
+    - if item.respond_to?(:image_attachments)
+      - count = item.image_attachments.size
+      = link_to "Images (#{count})", "?show[image_attachments]=yes", :class=>tabs_here(params[:show],'image_attachments')
+    - if item.respond_to?(:document_attachments)
+      - count = item.document_attachments.size
+      = link_to "Files (#{count})", "?show[document_attachments]=yes", :class=>tabs_here(params[:show],'document_attachments')
+
+    - if item.respond_to?(:lectures) || item.respond_to?(:quizzes) || item.respond_to?(:questions)
+      = tabs_divider
+    - if item.respond_to?(:lectures)
+      - count = item.lectures.size
+      = link_to "Lectures (#{count})", "?show[lectures]=yes", :class=>tabs_here(params[:show],'lectures')
+    - if item.respond_to?(:quizzes)
+      - count = item.quizzes.size
+      = link_to "Quizzes (#{count})", "?show[quizzes]=yes", :class=>tabs_here(params[:show],'quizzes')
+    - if item.respond_to?(:questions)
+      - count = item.questions.size
+      = link_to "Questions (#{count})", "?show[questions]=yes", :class=>tabs_here(params[:show],'questions')
+
+
+    - if item.respond_to?(:comments)
+      - count = item.comments.size
+      = tabs_divider
+      = link_to "Comments (#{count})", "?show[comments]=yes", :class=>tabs_here(params[:show],'comments')
+
+    %span.fright
+      - if item.respond_to?(:publishable?)
+        = link_to "P",        "?show[published]=yes",         :class=>tabs_here(params[:show],'published')
+      - if item.class.versioned?
+        = link_to "V",        "?show[versions]=yes",  :class=>tabs_here(params[:show],'versions')
+
+  .undertabs
+
+    - if params[:show] == nil || params[:show] && params[:show][:details]
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit details', "/#{table_name}/#{item.id}/edit", :class=>'edit'
+      = render :partial=>'/shared/admin/show_parent'
+      = render :partial=>'/shared/admin/show_details'
+
+    - elsif params[:show] && params[:show][:question] && item.respond_to?(:answer_a)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit question &amp; answers'.html_safe, "/#{table_name}/#{item.id}/edit_question", :class=>'edit'
+      = render :partial=>'show_question'
+
+    - elsif params[:show] && params[:show][:options] && item.respond_to?(:options)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit options', "/#{table_name}/#{item.id}/edit_options", :class=>'edit'
+
+    - elsif params[:show] && params[:show][:meta] && item.respond_to?(:meta_title)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit meta tags', "/#{table_name}/#{item.id}/edit_meta", :class=>'edit'
+      = render :partial=>'/shared/admin/show_meta'
+
+    - elsif params[:show] && params[:show][:abstract] && item.respond_to?(:abstract)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit abstract', "/#{table_name}/#{item.id}/edit_abstract", :class=>'edit'
+      = render :partial=>'/shared/admin/show_html_block', :locals=>{:field_name=>'abstract'}
+
+    - elsif params[:show] && params[:show][:content] && item.respond_to?(:content)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit content', "/#{table_name}/#{item.id}/edit_content", :class=>'edit'
+      = render :partial=>'/shared/admin/show_html_block', :locals=>{:field_name=>'content'}
+
+    - elsif params[:show] && params[:show][:caption] && item.respond_to?(:caption)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit caption', "/#{table_name}/#{item.id}/edit_caption", :class=>'edit'
+      = render :partial=>'/shared/admin/show_html_block', :locals=>{:field_name=>'caption'}
+
+    - elsif params[:show] && params[:show][:styles] && item.respond_to?(:styles)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit styles', "/#{table_name}/#{item.id}/edit_styles", :class=>'edit'
+      = render :partial=>'/shared/admin/show_css_block', :locals=>{:field_name=>'styles'}
+
+    - elsif params[:show] && params[:show][:scripts] && item.respond_to?(:scripts)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit scripts', "/#{table_name}/#{item.id}/edit_scripts", :class=>'edit'
+      = render :partial=>'/shared/admin/show_js_block', :locals=>{:field_name=>'scripts'}
+
+    - elsif params[:show] && params[:show][:tags] && item.respond_to?(:tags)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit tags', "/#{table_name}/#{item.id}/edit_tags", :class=>'edit'
+      = render :partial=>'/tags/list', :locals=>{:items=>item.tags,:title=>'Attached Tags'}
+
+    - elsif params[:show] && params[:show][:categories] && item.respond_to?(:categories)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'edit categories', "/#{table_name}/#{item.id}/edit_categories", :class=>'edit'
+      = render :partial=>'/categories/list', :locals=>{:items=>item.categories,:title=>'Attached Categories'}
+
+    - elsif params[:show] && params[:show][:image_attachments] && item.respond_to?(:image_attachments)
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'Attach New Image File', "/image_attachments/new?image_id=#{item.id}&return_to=files", :class=>'edit'
+      = render :partial=>'/images/show_files', :locals=>{:items=>item.image_attachments,:title=>'Attached Images'}
+
+
+    - elsif params[:show] && params[:show][:lectures] && item.respond_to?(:lectures)
+      .top_actions.buttons
+        .buttons_inner
+      = render :partial=>'/lectures/list', :locals=>{:items=>item.lectures}
+    - elsif params[:show] && params[:show][:quizzes] && item.respond_to?(:quizzes)
+      .top_actions.buttons
+        .buttons_inner
+      = render :partial=>'/quizzes/list', :locals=>{:items=>item.quizzes}
+    - elsif params[:show] && params[:show][:questions] && item.respond_to?(:questions)
+      .top_actions.buttons
+        .buttons_inner
+      = render :partial=>'/questions/list', :locals=>{:items=>item.questions}
+
+
+    - elsif params[:show] && params[:show][:comments] && item.respond_to?(:comments)
+      .top_actions.buttons
+        .buttons_inner= '&nbsp;'.html_safe
+      = render :partial=>'/shared/admin/show_comments'
+
+
+
+    - elsif params[:show] && params[:show][:published] && (item.respond_to?(:publishable?))
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'revert to p', "/#{table_name}/#{item.id}/revert_to_p", :class=>'revert'
+      = render :partial=>'/shared/admin/show_published', :locals=>{:field_name=>'p'}
+
+    - elsif params[:show] && params[:show][:p1] && (item.respond_to?(:p1_content) || item.respond_to?(:p1_styles) || item.respond_to?(:p1_scripts))
+      .top_actions.buttons
+        .buttons_inner
+          = link_to 'revert to p1', "/#{table_name}/#{item.id}/revert_to_p1", :class=>'revert'
+      = render :partial=>'/shared/admin/show_p1', :locals=>{:field_name=>'p1'}
+
+    - elsif params[:show] && params[:show][:versions] && (item.class.versioned?)
+      .top_actions.buttons
+        .buttons_inner= '&nbsp;'.html_safe
+      = render :partial=>'/shared/admin/show_versions'
+

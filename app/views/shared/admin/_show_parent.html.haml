@@ -1,0 +1,21 @@
+- log_shared_partial '/shared/admin/show_parent'
+
+- item ||= @object
+
+- if item
+
+  .block
+    .title= "Parent"
+    .content
+      %table
+        %tbody
+          - if item.respond_to?(:course)
+            = RDisplay.row('Course',RDisplay.link_to_obj(item.course,:id_str))
+          - if item.respond_to?(:lecture)
+            = RDisplay.row('Course',RDisplay.link_to_obj(item.lecture.course,:id_str))
+            = RDisplay.row('Lecture',RDisplay.link_to_obj(item.lecture,:id_str))
+          - if item.respond_to?(:quiz)
+            = RDisplay.row('Course',RDisplay.link_to_obj(item.quiz.lecture.course,:id_str))
+            = RDisplay.row('Lecture',RDisplay.link_to_obj(item.quiz.lecture,:id_str))
+            = RDisplay.row('Quiz',RDisplay.link_to_obj(item.quiz,:id_str))
+

@@ -1,0 +1,18 @@
+- log_layout_partial '/layouts/admin/userbar'
+
+#userbar
+  #userbar_inner.inner
+    #userbar_inside.inside
+
+      #user_actions
+        - if user_signed_in?
+          = link_to 'Log out', destroy_user_session_path, :method => :delete
+        - else
+          = link_to 'Log in', "/users/sign_in"
+
+      #user_info
+        - if user_signed_in?
+          - unless current_user.name.blank?
+            = current_user.name
+          = "(#{current_user.email})"
+

@@ -1,0 +1,7 @@
+- log_shared_partial '/shared/admin/filters'
+
+- content_for :filter do
+  = form_for(:filter,:url=>{:action=>'index'},:html=>{:id=>'filters',:method=>'get'}) do |f|
+    = @filter.search_field
+    = @filter.default_links
+
